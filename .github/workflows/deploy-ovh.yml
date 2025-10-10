@@ -1,0 +1,107 @@
+name: 🚀 Build and Deploy Nuxt.js 4 SSG App to OVH VPS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: 🏗️ Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v5
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 📝 Setup environment file
+        run: |
+          cp .env.example .env
+          sed -i "s/^NODE_ENV=.*/NODE_ENV=production/" .env || echo "NODE_ENV=production" >> .env
+          sed -i "s/^STORYBLOK_DELIVERY_API_TOKEN=.*/GITHUB_TOKEN=${{ secrets.STORYBLOK_DELIVERY_API_TOKEN }}/" .env || echo "GITHUB_TOKEN=${{ secrets.STORYBLOK_DELIVERY_API_TOKEN }}" >> .env
+
+      - name: 🛠️ Generate Static Site (Frontend)
+        run: npm run generate
+        env:
+          NITRO_PRESET: static
+
+      - name: 📂 Save static site output
+        run: |
+          if [ -d ".output/public" ]; then
+            mkdir -p tmp
+            mv .output/public tmp/public-static
+            echo "Static site output saved to tmp/public-static"
+          else
+            echo "Error: .output/public does not exist after npm run generate"
+            exit 1
+          fi
+
+      - name: 🛠️ Build Server (Nitro)
+        run: npm run build
+        env:
+          NITRO_PRESET: node-server
+
+      - name: 📂 Restore static site output
+        run: |
+          if [ -d "tmp/public-static" ]; then
+            rm -rf .output/public
+            mv tmp/public-static .output/public
+            echo "Static site output restored to .output/public"
+          else
+            echo "Error: tmp/public-static does not exist"
+            exit 1
+          fi
+
+      - name: 📤 Deploy static files to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: '.output/public/*'
+          target: '/var/www/a2m.dibodev.fr/html'
+          strip_components: 2
+
+      - name: 📤 Deploy .env to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: '.env'
+          target: '/var/www/a2m.dibodev.fr/server'
+          strip_components: 0
+
+      - name: 🛠️ Start Nitro server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Install Node.js if not already installed
+            if ! command -v node &> /dev/null; then
+              curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+            # Install PM2 if not already installed
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
+            # Restart Nginx
+            sudo nginx -t
+            sudo systemctl restart nginx

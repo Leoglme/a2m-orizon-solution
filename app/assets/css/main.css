@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-sans:
+            'Rubik', 'ui-sans-serif', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+            'Noto Color Emoji';
+    --color-primary: #8472f3;
+    --color-primary-light: #bdb3ff;
+    --color-primary-dark: #6b59d9;
+    --color-gray-100: #f5f4fb;
+    --color-gray-200: rgba(255, 255, 255, 0.7);
+    --color-gray-300: rgba(255, 255, 255, 0.3);
+    --color-gray-400: #454d5e;
+    --color-gray-600: #35424d;
+    --color-gray-700: #222b39;
+    --color-gray-800: #1b232d;
+    --color-gray-900: #101623;
+}
+
+.error-message {
+    position: absolute;
+    bottom: -28px;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* Chrome/Edge/Safari */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+@layer base {
+    body {
+        font-family: 'Inter', sans-serif;
+        @apply text-gray-900 bg-white;
+    }
+
+    .rich-text h1 {
+        @apply text-6xl font-extrabold mt-12 mb-6;
+    }
+
+    .rich-text h2 {
+        @apply text-5xl font-extrabold mt-10 mb-5;
+    }
+
+    .rich-text h3 {
+        @apply text-4xl font-extrabold mt-8 mb-4;
+    }
+
+    .rich-text h4 {
+        @apply text-3xl font-extrabold mt-6 mb-3;
+    }
+
+    .rich-text h5 {
+        @apply text-2xl font-extrabold mt-5 mb-2;
+    }
+
+    .rich-text h6 {
+        @apply text-xl font-extrabold mt-4 mb-2;
+    }
+
+    .rich-text p {
+        @apply text-base my-6;
+    }
+
+    .rich-text a {
+        @apply text-blue-600 hover:text-blue-800 underline;
+    }
+}

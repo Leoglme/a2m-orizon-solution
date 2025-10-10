@@ -1,10 +1,10 @@
-import { type BlockContent } from '~/delivery-api'
-import { type Mark } from './Mark'
+import type { BlockContent } from '~/delivery-api'
+import type { Mark } from './Mark'
 
 /**
  * Rich text content consists of ProseMirror nodes
  */
-export type RichTextContent =
+export type RichTextContentt =
     | DocNode
     | ParagraphNode
     | TextNode
@@ -23,12 +23,12 @@ export type RichTextContent =
 
 export type DocNode = {
     type: 'doc'
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type ParagraphNode = {
     type: 'paragraph'
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type TextNode = {
@@ -43,12 +43,12 @@ export type HorizontalRuleNode = {
 
 export type BlockQuoteNode = {
     type: 'blockquote'
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type ListItemNode = {
     type: 'list_item'
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type BulletListNode = {
@@ -66,7 +66,7 @@ export type HeadingNode = {
     attrs: {
         level: 1 | 2 | 3 | 4 | 5 | 6
     }
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type BlockNode = {
@@ -80,7 +80,7 @@ export type BlockNode = {
 
 export type CodeBlockNode = {
     type: 'code_block'
-    content: RichTextContent[]
+    content: RichTextContentt[]
 }
 
 export type ImageNode = {
