@@ -24,7 +24,7 @@ const { story } = await useAsyncStoryblok(
     {
       bridge: {},
       api: {
-        version: 'draft',
+        version: process.env.NODE_ENV === 'production' ? 'published' : 'draft',
       },
     }
 );

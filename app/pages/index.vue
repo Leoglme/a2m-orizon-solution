@@ -1,7 +1,7 @@
 <script setup>
 const { story } = await useAsyncStoryblok('home', {
   api: {
-    version: 'draft', // or 'published'
+    version: process.env.NODE_ENV === 'production' ? 'published' : 'draft',
   },
 });
 </script>
