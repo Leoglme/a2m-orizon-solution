@@ -13,6 +13,8 @@ export type Content =
     | CardContent
     | TabsContent
     | TabContent
+    | FaqContent
+    | FaqItemContent
 
 export type BackgroundColor =
     | 'beige'
@@ -69,4 +71,21 @@ export type TabsContent = BlockContent<{
     component: 'tabs'
     description: RichTextContent
     tabs: TabContent[]
+}>
+
+
+export type FaqItemContent = BlockContent<{
+    component: 'faq_item'
+    question: string
+    answer: RichTextContent
+    defaultOpen?: boolean
+}>
+
+export type FaqContent = BlockContent<{
+    component: 'faq'
+    title?: string
+    intro?: RichTextContent
+    items: FaqItemContent[]
+    backgroundColor: BackgroundColor
+    allowMultipleOpen?: boolean
 }>

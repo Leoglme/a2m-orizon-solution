@@ -22,6 +22,10 @@
   <slot v-if="props.blok.component === 'button'">
     <Button :blok="props.blok"></Button>
   </slot>
+
+  <slot v-if="props.blok.component === 'faq'">
+    <Faq :blok="props.blok" />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -35,6 +39,7 @@ import Hero from './Hero.vue'
 import Tabs from './Tabs.vue'
 import Card from './Card.vue'
 import Button from './Button.vue'
+import Faq from './Faq.vue'
 
 export type ContentProps = {
   blok: Content
