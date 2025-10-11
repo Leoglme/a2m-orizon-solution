@@ -8,6 +8,11 @@ import type {
 export type Content =
     | HeroContent
     | ButtonContent
+    | PageContent
+    | CardsContent
+    | CardContent
+    | TabsContent
+    | TabContent
 
 export type BackgroundColor =
     | 'beige'
@@ -35,4 +40,33 @@ export type ButtonContent = BlockContent<{
     text: string
     link?: LinkContent
     color: 'primary' | 'secondary'
+}>
+
+export type PageContent = BlockContent<{
+    component: 'page'
+    body: Content[]
+}>
+
+export type CardContent = BlockContent<{
+    component: 'card'
+    description: RichTextContent
+    icon?: AssetContent
+}>
+
+export type CardsContent = BlockContent<{
+    component: 'cards'
+    description: RichTextContent
+    cards: CardContent[]
+}>
+
+export type TabContent = BlockContent<{
+    component: 'tab'
+    title: string
+    content: Content[]
+}>
+
+export type TabsContent = BlockContent<{
+    component: 'tabs'
+    description: RichTextContent
+    tabs: TabContent[]
 }>

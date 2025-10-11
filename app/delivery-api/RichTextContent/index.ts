@@ -1,3 +1,3 @@
-export * from './RichTextContentt'
+export * from './RichTextContent'
 
 export * from './Mark'

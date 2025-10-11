@@ -4,7 +4,7 @@ import type { Mark } from './Mark'
 /**
  * Rich text content consists of ProseMirror nodes
  */
-export type RichTextContentt =
+export type RichTextContent =
     | DocNode
     | ParagraphNode
     | TextNode
@@ -23,12 +23,12 @@ export type RichTextContentt =
 
 export type DocNode = {
     type: 'doc'
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type ParagraphNode = {
     type: 'paragraph'
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type TextNode = {
@@ -43,12 +43,12 @@ export type HorizontalRuleNode = {
 
 export type BlockQuoteNode = {
     type: 'blockquote'
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type ListItemNode = {
     type: 'list_item'
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type BulletListNode = {
@@ -66,7 +66,7 @@ export type HeadingNode = {
     attrs: {
         level: 1 | 2 | 3 | 4 | 5 | 6
     }
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type BlockNode = {
@@ -80,7 +80,7 @@ export type BlockNode = {
 
 export type CodeBlockNode = {
     type: 'code_block'
-    content: RichTextContentt[]
+    content: RichTextContent[]
 }
 
 export type ImageNode = {

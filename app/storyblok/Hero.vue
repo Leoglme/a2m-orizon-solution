@@ -3,30 +3,28 @@
       :class="`self-stretch ${backgroundColor(
       props.blok.backgroundColor,
     )} flex justify-center`"
-      v-editable="props.blok"
-  >
+      v-editable="props.blok">
     <div
         :class="`w-full ${
         props.blok.imagePadding ? 'p-4 md:p-10' : 'p-0'
-      } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-7xl`"
-    >
+      } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-7xl`">
       <div
           :class="`
           flex-1 p-6 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
-          ${textAlignment(props.blok)}
-        `"
+          ${textAlignment(props.blok)}`"
       >
-        <RichTextView :doc="props.blok.description"></RichTextView>
+        <RichTextView
+            :doc="props.blok.description"
+            :blok="props.blok"
+        />
         <div class="flex gap-2 md:gap-4 flex-wrap items-center">
-          <template
-              :key="button._uid"
-              v-for="button in props.blok.buttons"
-          >
-            <Button :blok="button"></Button>
-          </template>
+          <slot
+              v-for="button in props.blok.buttons">
+            <Button :blok="button" />
+          </slot>
         </div>
       </div>
-      <template v-if="props.blok.image">
+      <slot v-if="props.blok.image">
         <div
             :class="`relative flex-1 overflow-hidden md:min-h-[650px] ${
             props.blok.imagePadding
@@ -42,7 +40,7 @@
               :class="`absolute h-full w-full object-cover`"
           />
         </div>
-      </template>
+      </slot>
     </div>
   </div>
 </template>
@@ -51,9 +49,9 @@
 import type { PropType } from 'vue'
 import type { HeroContent } from '~/content'
 import RichTextView from '~/components/RichText.vue'
-
-import { backgroundColor } from './backgroundColorClass'
 import Button from './Button.vue'
+import { backgroundColor } from './backgroundColorClass'
+
 const rootAlignment = (content: HeroContent): string => {
   if (!content.image) {
     return 'flex flex-col md:flex-col'

@@ -5,8 +5,7 @@
         :target="props.blok.link?.target"
         :class="classFromContent(blok)"
         :to="props.blok.link?.cached_url"
-        v-editable="blok"
-    >
+        v-editable="blok">
       {{ props.blok.text }}
     </NuxtLink>
   </slot>
@@ -17,8 +16,8 @@
         :target="props.blok.link?.target"
         :class="classFromContent(blok)"
         :to="hrefFromStoryLink(props.blok.link?.cached_url)"
-        v-editable="blok"
-    >{{ props.blok.text }}
+        v-editable="blok">
+      {{ props.blok.text }}
     </NuxtLink>
   </slot>
 
@@ -26,8 +25,8 @@
     <NuxtLink
         :class="classFromContent(blok)"
         :to="`mailto:${props.blok.link?.email}`"
-        v-editable="blok"
-    >{{ props.blok.text }}
+        v-editable="blok">
+      {{ props.blok.text }}
     </NuxtLink>
   </slot>
 
@@ -36,8 +35,8 @@
         rel="noopener noreferrer"
         :class="classFromContent(blok)"
         :to="props.blok.link?.cached_url"
-        v-editable="blok"
-    >{{ props.blok.text }}
+        v-editable="blok">
+      {{ props.blok.text }}
     </NuxtLink>
   </slot>
 </template>
@@ -46,6 +45,7 @@
 import type { PropType } from 'vue';
 import type { ButtonContent } from '~/content'
 import NuxtLink from '#app/components/nuxt-link'
+
 const classFromContent = (content: ButtonContent): string =>
     `self-center px-6 py-3 rounded-lg inline-flex flex-col items-end gap-3 overflow-hidden text-right justify-center text-sm font-semibold leading-tight transition-border duration-300 ease-in-out ${colorStyles(
         content,
