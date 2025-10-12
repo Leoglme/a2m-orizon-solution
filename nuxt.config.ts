@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     devServer: {
         https: true,
     },
+    plugins: ['~/plugins/VeeValidate'],
     css: ['~/assets/css/main.css'],
     vite: {
         plugins: [

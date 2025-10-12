@@ -26,6 +26,16 @@
   <slot v-if="props.blok.component === 'faq'">
     <Faq :blok="props.blok" />
   </slot>
+
+  <slot v-if="props.blok.component === 'map_section'">
+    <MapSection :blok="props.blok" />
+  </slot>
+  <slot v-if="props.blok.component === 'map'">
+    <Map :blok="props.blok" />
+  </slot>
+  <slot v-if="props.blok.component === 'contact_section'">
+    <ContactSection :blok="props.blok" />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -40,6 +50,9 @@ import Tabs from './Tabs.vue'
 import Card from './Card.vue'
 import Button from './Button.vue'
 import Faq from './Faq.vue'
+import MapSection from './MapSection.vue'
+import Map from './Map.vue'
+import ContactSection from './ContactSection.vue'
 
 export type ContentProps = {
   blok: Content

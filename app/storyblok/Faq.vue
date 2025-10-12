@@ -8,8 +8,8 @@
           {{ props.blok.title }}
         </h2>
 
-        <slot v-if="props.blok.intro">
-          <RichTextView :doc="props.blok.intro" :blok="props.blok" />
+        <slot v-if="props.blok.description">
+          <RichTextView :doc="props.blok.description" :blok="props.blok" />
         </slot>
       </div>
 

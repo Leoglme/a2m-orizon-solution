@@ -15,6 +15,10 @@ export type Content =
     | TabContent
     | FaqContent
     | FaqItemContent
+    | MapSectionContent
+    | MapContent
+    | ContactSectionContent
+    | PillOptionContent
 
 export type BackgroundColor =
     | 'beige'
@@ -84,8 +88,46 @@ export type FaqItemContent = BlockContent<{
 export type FaqContent = BlockContent<{
     component: 'faq'
     title?: string
-    intro?: RichTextContent
+    description?: RichTextContent
     items: FaqItemContent[]
     backgroundColor: BackgroundColor
     allowMultipleOpen?: boolean
+}>
+
+
+export type MapContent = BlockContent<{
+    component: 'map'
+    latitude: number
+    longitude: number
+    zoom: number
+    mapType: 'roadmap' | 'satellite'
+    height?: number
+    title?: string
+    address?: string
+}>
+
+export type MapSectionContent = BlockContent<{
+    component: 'map_section'
+    title?: string
+    description?: RichTextContent
+    button: ButtonContent[]
+    map: MapContent[]
+    backgroundColor: BackgroundColor
+}>
+
+export type PillOptionContent = BlockContent<{
+    component: 'pill_option'
+    label: string
+    value?: string
+    active?: boolean
+}>
+
+export type ContactSectionContent = BlockContent<{
+    component: 'contact_section'
+    title?: string
+    description?: RichTextContent
+    subjects: PillOptionContent[]
+    button: ButtonContent[]
+    placeholders?: string
+    backgroundColor: BackgroundColor
 }>
