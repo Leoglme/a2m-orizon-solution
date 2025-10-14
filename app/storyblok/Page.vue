@@ -1,21 +1,17 @@
 <template>
   <div
-      class="flex flex-col items-stretch"
+      class="flex flex-col items-stretch pt-20 sm:pt-22"
       v-editable="props.blok"
   >
-    <AppBar />
     <slot
       v-for="content in props.blok.body">
     <Content :blok="content" />
     </slot>
-    <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import AppBar from '~/components/AppBar.vue'
-import Footer from '~/components/Footer.vue'
 import Content from '~/storyblok/Content.vue'
 import type { PageContent } from '~/content'
 

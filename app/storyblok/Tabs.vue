@@ -16,7 +16,7 @@
                 @click="async (_event) => (currentTabUid = tab._uid)"
                 :class="`flex-1 py-2 text-sm sm:py-3 sm:text-base md:py-4 ${
                 currentTabUid === tab._uid
-                  ? 'bg-stone-800 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-transparent text-stone-800 '
               } rounded-lg flex justify-center items-center gap-0.5`"
                 v-editable="tab">
@@ -29,7 +29,7 @@
         <slot
             v-for="content in currentTab?.content">
           <div
-              class="rounded-xl md:rounded-3xl overflow-hidden flex flex-col items-stretch gap-2">
+              class="rounded-xl md:rounded-3xl overflow-hidden flex-col items-stretch gap-2">
             <Content :blok="content" />
           </div>
         </slot>

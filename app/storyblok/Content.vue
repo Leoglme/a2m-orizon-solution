@@ -36,6 +36,18 @@
   <slot v-if="props.blok.component === 'contact_section'">
     <ContactSection :blok="props.blok" />
   </slot>
+  <slot v-if="props.blok.component === 'navbar'">
+    <Navbar :blok="props.blok" />
+  </slot>
+  <slot v-if="props.blok.component === 'link'">
+    <Link :blok="props.blok" />
+  </slot>
+  <slot v-if="props.blok.component === 'dropdown'">
+    <Dropdown :blok="props.blok" />
+  </slot>
+  <slot v-if="props.blok.component === 'footer'">
+    <Footer :blok="props.blok" />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -53,6 +65,10 @@ import Faq from './Faq.vue'
 import MapSection from './MapSection.vue'
 import Map from './Map.vue'
 import ContactSection from './ContactSection.vue'
+import Navbar from './Navbar.vue'
+import Footer from './Footer.vue'
+import Link from './Link.vue'
+import Dropdown from './Dropdown.vue'
 
 export type ContentProps = {
   blok: Content

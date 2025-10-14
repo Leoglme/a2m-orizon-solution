@@ -1,79 +1,64 @@
 <template>
-  <slot v-if="props.blok.link?.linktype === 'url'">
-    <NuxtLink
-        rel="noopener noreferrer"
-        :target="props.blok.link?.target"
-        :class="classFromContent(blok)"
-        :to="props.blok.link?.cached_url"
-        v-editable="blok">
-      {{ props.blok.text }}
-    </NuxtLink>
-  </slot>
-
-  <slot v-if="props.blok.link?.linktype === 'story'">
-    <NuxtLink
-        rel="noopener noreferrer"
-        :target="props.blok.link?.target"
-        :class="classFromContent(blok)"
-        :to="hrefFromStoryLink(props.blok.link?.cached_url)"
-        v-editable="blok">
-      {{ props.blok.text }}
-    </NuxtLink>
-  </slot>
-
-  <slot v-if="props.blok.link?.linktype === 'email'">
-    <NuxtLink
-        :class="classFromContent(blok)"
-        :to="`mailto:${props.blok.link?.email}`"
-        v-editable="blok">
-      {{ props.blok.text }}
-    </NuxtLink>
-  </slot>
-
-  <slot v-if="props.blok.link?.linktype === 'asset'">
-    <NuxtLink
-        rel="noopener noreferrer"
-        :class="classFromContent(blok)"
-        :to="props.blok.link?.cached_url"
-        v-editable="blok">
-      {{ props.blok.text }}
-    </NuxtLink>
-  </slot>
+  <A2MButton
+      class="self-center"
+      :to="to"
+      :size="props.blok.size"
+      :backgroundColor="backgroundColor"
+      :backgroundHoverColor="backgroundHoverColor"
+      :disabled="false"
+  >
+    {{ props.blok.text }}
+    <slot />
+  </A2MButton>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, ComputedRef } from 'vue'
 import type { ButtonContent } from '~/content'
-import NuxtLink from '#app/components/nuxt-link'
+import type { LinkContent } from "~/delivery-api";
+import { computed } from 'vue'
+import A2MButton from '~/components/core/A2MButton.vue'
 
-const classFromContent = (content: ButtonContent): string =>
-    `self-center px-6 py-3 rounded-lg inline-flex flex-col items-end gap-3 overflow-hidden text-right justify-center text-sm font-semibold leading-tight transition-border duration-300 ease-in-out ${colorStyles(
-        content,
-    )}`
-const colorStyles = (content: ButtonContent): string => {
-  switch (content.color) {
-    case 'primary':
-      return 'bg-stone-900 hover:bg-stone-800 text-white hover:border-stone-800'
-    case 'secondary':
-      return 'bg-white color-stone-900 hover:bg-stone-100 hover:border-stone-900'
-  }
-}
-/**
- * Converts a story link slug to a URL path for this application.
- * `/pages/mypage` -> `/mypage`
- * @param slugs
- */
-const hrefFromStoryLink = (slugs: string): string =>
-    '/' + slugs.split('/').slice(1).join('/')
-
-export type ButtonProps = {
-  blok: ButtonContent
-}
-
+export type ButtonProps = { blok: ButtonContent }
 const props: ButtonProps = defineProps({
-  blok: {
-    type: Object as PropType<ButtonContent>,
-    required: true,
-  },
+  blok: { type: Object as PropType<ButtonContent>, required: true },
+})
+
+/** Resolve target URL from Storyblok link */
+const to: ComputedRef<string> = computed(() => {
+  const link: LinkContent | undefined = props.blok.link
+  if (!link) return '#'
+
+  switch (link.linktype) {
+    case 'url':
+    case 'asset':
+      return link.cached_url
+    case 'story':
+      return '/' + link.cached_url.split('/').slice(1).join('/')
+    case 'email':
+      return `mailto:${link.email}`
+    default:
+      return '#'
+  }
+})
+
+/** Color mapping: adapte ici si tu ajoutes d’autres variantes */
+const backgroundColor: ComputedRef<string> = computed(() => {
+  switch (props.blok.color) {
+    case 'secondary':
+      return '#EC9E0A'
+    case 'primary':
+    default:
+      return '#004AAD'
+  }
+})
+const backgroundHoverColor: ComputedRef<string> = computed(() => {
+  switch (props.blok.color) {
+    case 'secondary':
+      return '#F1A01E'
+    case 'primary':
+    default:
+      return '#045DC3'
+  }
 })
 </script>

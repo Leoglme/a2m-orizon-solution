@@ -7,11 +7,14 @@
     <div
         :class="`w-full ${
         props.blok.imagePadding ? 'p-4 md:p-10' : 'p-0'
-      } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-7xl`">
+      } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-[1500px]
+        ${props.blok.layoutPosition === 'center' ? 'pt-0!': undefined}
+      `"
+    >
       <div
           :class="`
           flex-1 p-6 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
-          ${textAlignment(props.blok)}`"
+          ${layoutPosition(props.blok)}`"
       >
         <RichTextView
             :doc="props.blok.description"
@@ -37,7 +40,7 @@
               :alt="props.blok.image?.alt ?? ''"
               :width="1200"
               :height="650"
-              :class="`absolute h-full w-full object-cover`"
+              :class="`absolute h-full w-full object-cover rounded-xl`"
           />
         </div>
       </slot>
@@ -56,7 +59,7 @@ const rootAlignment = (content: HeroContent): string => {
   if (!content.image) {
     return 'flex flex-col md:flex-col'
   }
-  switch (content.textAlignment) {
+  switch (content.layoutPosition) {
     case 'left':
       return 'flex flex-col md:flex-row'
     case 'right':
@@ -65,11 +68,11 @@ const rootAlignment = (content: HeroContent): string => {
       return 'flex flex-col md:flex-col'
   }
 }
-const textAlignment = (content: HeroContent): string => {
+const layoutPosition = (content: HeroContent): string => {
   if (!content.image) {
     return 'items-center'
   }
-  switch (content.textAlignment) {
+  switch (content.layoutPosition) {
     case 'left':
     case 'right':
       return 'items-start'

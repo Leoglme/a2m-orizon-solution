@@ -8,16 +8,15 @@ const route: RouteLocationNormalizedLoadedGeneric = useRoute();
 const slug: string | string[] | undefined  = route.params.slug;
 
 const storyPath: ComputedRef<string> = computed(() => {
+  console.log({
+    slug,
+  })
   if (!slug) return '/pages'
 
-  const last: string =
-      Array.isArray(slug) && slug.length > 0
-          ? slug[slug.length - 1] || ''
-          : typeof slug === 'string'
-              ? slug
-              : ''
+  // Concatenate array to get the full slug path (e.g., ['about', 'team'] -> 'about/team')
+  const concatSlug: string = Array.isArray(slug) ? slug.join('/') : slug;
 
-  return `/pages/${last}`
+  return `/pages/${concatSlug}`
 })
 
 const { story } = await useAsyncStoryblok(
