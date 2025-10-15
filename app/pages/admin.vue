@@ -32,7 +32,7 @@
                 :to="links.storyblok"
                 size="md"
             >
-              Ouvrir l’éditeur Storyblok
+              Ouvrir l’éditeur
             </A2MButton>
 
             <A2MLink
@@ -45,7 +45,7 @@
 
           <ul class="mt-5 list-disc pl-5 text-sm text-stone-600 space-y-1">
             <li>Pour modifier une page : cliquez sur son nom, puis changez le contenu et <strong>Publiez</strong>.</li>
-            <li>Le bouton <em>Enregistrer</em> montre le rendu avant la publication.</li>
+            <li>Le bouton <strong>Enregistrer</strong> montre le rendu avant la publication.</li>
           </ul>
         </div>
 
@@ -115,12 +115,12 @@ const links = {
   storyblok:
       'https://app.storyblok.com/#/me/spaces/287711486895708/stories/0/0/index/100031475807343?currentPage=1',
   umami:
-      'https://umami.a2m.dibodev.fr/websites/ecbfe143-fc09-4574-917b-413ca729e1ac',
+      'https://umami.a2m-orizon-solutionsocial.fr/websites/ecbfe143-fc09-4574-917b-413ca729e1ac',
 }
 
 const docs = {
   storyblok: 'https://www.storyblok.com/docs/guide/introduction',
-  umami: 'https://umami.is/docs',
+  umami: 'https://umami.is/docs/filter',
 }
 
 /** Coordonnées support */

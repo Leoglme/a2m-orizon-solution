@@ -71,7 +71,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: '.output/public/*'
-          target: '/var/www/a2m.dibodev.fr/html'
+          target: '/var/www/a2m-orizon-solutionsocial.fr/html'
           strip_components: 2
 
       - name: 📤 Deploy .env to VPS
@@ -82,7 +82,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: '.env'
-          target: '/var/www/a2m.dibodev.fr/html'
+          target: '/var/www/a2m-orizon-solutionsocial.fr/html'
           strip_components: 0
 
       - name: 🛠️ Start Nitro server
