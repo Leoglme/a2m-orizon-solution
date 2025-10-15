@@ -6,6 +6,7 @@ import type { RouteLocationNormalizedLoadedGeneric } from "#vue-router";
 
 const route: RouteLocationNormalizedLoadedGeneric = useRoute();
 const slug: string | string[] | undefined  = route.params.slug;
+const isStoryblokEditor = !!route.query._storyblok;
 
 const storyPath: ComputedRef<string> = computed(() => {
   console.log({
@@ -24,7 +25,7 @@ const { story } = await useAsyncStoryblok(
     {
       bridge: {},
       api: {
-        version: process.env.NODE_ENV === 'production' ? 'published' : 'draft',
+        version: isStoryblokEditor ? 'draft' : 'published',
       },
     }
 );
