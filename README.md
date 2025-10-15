@@ -10,11 +10,6 @@
   Built with <a href="https://nuxt.com" target="_blank">Nuxt 4</a> and <a href="https://www.storyblok.com" target="_blank">Storyblok CMS</a>.
 </p>
 
-<div style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
-<img src="https://a.storyblok.com/f/287711486895708/50x50/d93deb9fc2/folder-open.svg" alt="" title="" />
-<p>Basée à Melun (77), j’interviens principalement en Seine-et-Marne et dans les départements voisins.</p>
-</div>
-
 ---
 
 ## 🚀 Overview
