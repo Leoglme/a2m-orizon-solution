@@ -17,6 +17,7 @@ export type Content =
     | FaqItemContent
     | MapSectionContent
     | MapContent
+    | ContactItemContent
     | ContactSectionContent
     | PillOptionContent
     | LinkContent
@@ -118,10 +119,21 @@ export type MapContent = BlockContent<{
     address?: string
 }>
 
+export type ContantItemContentIconType = 'map-pin' | 'mail' | 'phone'
+
+export type ContactItemContent = BlockContent<{
+    component: 'contact_item'
+    icon: ContantItemContentIconType
+    text: string
+    link?: TLinkContent
+}>
+
 export type MapSectionContent = BlockContent<{
     component: 'map_section'
+    layout: 'description' | 'contacts'
     title?: string
     description?: RichTextContent
+    contacts?: ContactItemContent[]
     button: ButtonContent[]
     map: MapContent[]
     backgroundColor: BackgroundColor

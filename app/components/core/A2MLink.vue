@@ -1,6 +1,8 @@
 <template>
   <a
       v-if="isExternalLink"
+      target="_blank"
+      rel="noopener"
       class="inline-flex cursor-pointer items-center gap-x-1.5 font-semibold decoration-2 underline-offset-4 hover:underline text-base"
       :href="href"
       :style="{ color: props.color }"
@@ -21,6 +23,7 @@
 import type { ComputedRef } from 'vue'
 import { defineProps } from '@vue/runtime-core'
 import { computed } from 'vue'
+import NuxtLink from "#app/components/nuxt-link";
 
 /**
  * Type definitions for the A2MLink component props
