@@ -10,7 +10,7 @@ export default defineNuxtConfig({
             title: 'A2M ÔRIZON SOLUTION - Assistance sociale Paris Île-de-France',
             script: [
                 {
-                    src: 'https://umami.a2m.dibodev.fr/script.js',
+                    src: 'https://umami.a2m-orizon-solutionsocial.fr/script.js',
                     defer: true,
                     'data-website-id': 'ecbfe143-fc09-4574-917b-413ca729e1ac',
                 },
