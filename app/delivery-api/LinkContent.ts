@@ -2,6 +2,7 @@ export type UrlLinkContent = {
     fieldtype: 'multilink'
     target?: '_blank' | '_self'
     linktype: 'url'
+    url: string
     cached_url: string
 }
 

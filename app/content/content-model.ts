@@ -44,6 +44,7 @@ export type HeroContent = BlockContent<{
     image?: AssetContent
     imagePadding: boolean
     layoutPosition: 'left' | 'right' | 'center'
+    sectionId?: string
     description: RichTextContent
     backgroundColor: BackgroundColor
     buttons: ButtonContent[]
@@ -72,6 +73,7 @@ export type CardContent = BlockContent<{
 
 export type CardsContent = BlockContent<{
     component: 'cards'
+    sectionId?: string
     description: RichTextContent
     cards: CardContent[]
     button?: ButtonContent[]
@@ -148,6 +150,7 @@ export type PillOptionContent = BlockContent<{
 
 export type ContactSectionContent = BlockContent<{
     component: 'contact_section'
+    sectionId?: string
     title?: string
     description?: RichTextContent
     subjects: PillOptionContent[]

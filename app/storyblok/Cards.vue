@@ -1,5 +1,6 @@
 <template>
-  <div
+  <section
+      :id="props.blok.sectionId"
       class="self-stretch px-5 py-10 md:px-20 md:py-24 items-center flex flex-col"
       :class="backgroundColor(props.blok.backgroundColor)"
       v-editable="props.blok">
@@ -23,7 +24,7 @@
         </slot>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

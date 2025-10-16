@@ -1,5 +1,6 @@
 <template>
   <A2MButton
+      v-if="props.blok"
       class="self-center"
       :to="to"
       :size="props.blok.size"
@@ -24,19 +25,29 @@ const props: ButtonProps = defineProps({
   blok: { type: Object as PropType<ButtonContent>, required: true },
 })
 
+const link: ComputedRef<LinkContent | undefined> = computed(() => props.blok?.link)
+
+const isAnchorLink: ComputedRef<boolean> = computed(() => {
+  if (!link.value || link.value.linktype !== 'url') return false
+  return link.value.url.startsWith('#') && link.value.url.length > 1
+})
+
 /** Resolve target URL from Storyblok link */
 const to: ComputedRef<string> = computed(() => {
-  const link: LinkContent | undefined = props.blok.link
-  if (!link) return '#'
+  if (!link.value) return '#'
 
-  switch (link.linktype) {
+  switch (link.value.linktype) {
     case 'url':
+      if(isAnchorLink.value) {
+        return link.value.url
+      }
+      return link.value.cached_url
     case 'asset':
-      return link.cached_url
+      return link.value.cached_url
     case 'story':
-      return '/' + link.cached_url.split('/').slice(1).join('/')
+      return '/' + link.value.cached_url.split('/').slice(1).join('/')
     case 'email':
-      return `mailto:${link.email}`
+      return `mailto:${link.value.email}`
     default:
       return '#'
   }

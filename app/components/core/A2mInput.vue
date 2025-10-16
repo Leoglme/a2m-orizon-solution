@@ -24,7 +24,7 @@
           :id="props.id"
           :value="props.value"
           @blur="emit('blur')"
-          class="focus:border-primary relative flex w-full items-center justify-center rounded border-2 bg-gray-600 pt-3 pl-3 text-gray-100 outline-none placeholder:text-base placeholder:text-gray-300 focus:bg-gray-800"
+          class="focus:border-primary-light relative flex w-full items-center justify-center rounded border-2 bg-gray-700 pt-3 pl-3 text-gray-100 outline-none placeholder:text-base placeholder:text-gray-300 focus:bg-gray-800"
           :placeholder="props.placeholder || undefined"
           :class="{
           'pr-3': typeRef === 'number',
@@ -42,7 +42,7 @@
           :min="props.min ? props.min.toString() : undefined"
           :step="props.step ? props.step.toString() : undefined"
           @blur="emit('blur')"
-          class="focus:border-primary relative flex h-12 w-full appearance-none items-center justify-center rounded border-2 bg-gray-600 pl-3 text-gray-100 outline-none placeholder:text-base placeholder:text-gray-300 focus:bg-gray-800"
+          class="focus:border-primary-light relative flex h-12 w-full appearance-none items-center justify-center rounded border-2 bg-gray-700 pl-3 text-gray-100 outline-none placeholder:text-base placeholder:text-gray-300 focus:bg-gray-800"
           :placeholder="props.placeholder || undefined"
           :class="{
           'pr-3': typeRef === 'number',
@@ -59,10 +59,10 @@
         v-if="type === 'password'"
         @click.prevent="handleTogglePassword"
     >
-      <Eye
+      <EyeIcon
           v-if="!togglePassword"
       />
-      <EyeOff
+      <EyeOffIcon
           v-if="togglePassword"
       />
     </div>
@@ -71,8 +71,8 @@
 </template>
 
 <script lang="ts" setup>
-import Eye from '@/components/icons/Eye.vue'
-import EyeOff from '@/components/icons/EyeOff.vue'
+import EyeIcon from '~/components/icons/EyeIcon.vue'
+import EyeOffIcon from '~/components/icons/EyeOffIcon.vue'
 import A2MLabel from '@/components/core/A2MLabel.vue'
 import { Field, ErrorMessage } from 'vee-validate'
 import { ref } from 'vue'

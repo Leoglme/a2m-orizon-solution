@@ -9,11 +9,12 @@
     --color-secondary: #EC9E0A;
     --color-secondary-light: #F1A01E;
     --color-blue-200: #F3F6FC;
+    --color-gray-100: #f5f4fb;
+    --color-gray-300: rgba(255, 255, 255, 0.4);
+    --color-gray-700: #1B232D;
     /*--color-primary-light: #bdb3ff;*/
     /*--color-primary-dark: #6b59d9;*/
-    /*--color-gray-100: #f5f4fb;*/
     /*--color-gray-200: rgba(255, 255, 255, 0.7);*/
-    /*--color-gray-300: rgba(255, 255, 255, 0.3);*/
     /*--color-gray-400: #454d5e;*/
     /*--color-gray-600: #35424d;*/
     /*--color-gray-700: #222b39;*/
@@ -94,5 +95,32 @@ input[type='number']::-webkit-inner-spin-button {
 
     .rich-text a {
         @apply text-blue-600 hover:text-blue-800 underline;
+    }
+}
+
+
+@layer utilities {
+    .animate-bounce-pulse {
+        animation: bouncePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes bouncePulse {
+        0%,
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        25% {
+            transform: translateY(4px) scale(1.05);
+            opacity: 0.8;
+        }
+        50% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        75% {
+            transform: translateY(4px) scale(1.05);
+            opacity: 0.8;
+        }
     }
 }

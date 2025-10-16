@@ -11,9 +11,14 @@
       '--background-hover-color': backgroundHoverColorComputed,
     }"
       :target="isExternalLink ? '_blank' : undefined"
+      @click="onClick"
   >
     <span class="flex items-center justify-center">
       <slot />
+      <DoubleChevronsDownIcon
+        v-if="isAnchorLink"
+        className="animate-bounce-pulse ml-2"
+      />
     </span>
   </component>
 </template>
@@ -23,6 +28,7 @@ import { computed } from 'vue'
 import type { ComputedRef, PropType } from 'vue'
 import { defineProps } from '@vue/runtime-core'
 import { ColorUtils } from '~/core/utils/ColorUtils'
+import DoubleChevronsDownIcon from "~/components/icons/DoubleChevronsDownIcon.vue";
 
 const A2MButtonSizes: string[] = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const
 
@@ -72,6 +78,12 @@ const props: A2MButtonProps = defineProps({
   },
 })
 
+
+const isAnchorLink: ComputedRef<boolean> = computed(() => {
+  if (!props.to) return false
+  return props.to.startsWith('#') && props.to.length > 1
+})
+
 const backgroundHoverColorComputed: ComputedRef<string> = computed(() => {
   if (props.backgroundColor === '#004AAD') {
     return props.backgroundHoverColor
@@ -107,14 +119,44 @@ const isExternalLink: ComputedRef<boolean> = computed(() => {
 
 const isLink: ComputedRef<boolean> = computed(() => {
   if (!props.to) return false
+  if (isAnchorLink.value) return false
   return !isExternalLink.value
 })
 
 const componentType: ComputedRef<string> = computed(() => {
+  if (isAnchorLink.value) return 'a'
   if (isExternalLink.value) return 'a'
   if (isLink.value) return 'RouterLink'
   return 'button'
 })
+
+/**
+ * Function to scroll to the target section.
+ * @returns {void}
+ */
+const scrollToTargetSection: (ctaTarget: string) => void = (ctaTarget: string): void => {
+  const targetSection: HTMLElement | null = document.querySelector(ctaTarget)
+  console.log({
+    ctaTarget,
+    targetSection
+  })
+  if (targetSection) {
+    const offset: number = 85
+    const top: number = targetSection.getBoundingClientRect().top + window.scrollY - offset
+    window.scrollTo({
+      top,
+      behavior: 'smooth',
+    })
+  } else {
+    console.warn(`Target section ${ctaTarget} not found.`)
+  }
+}
+
+const onClick = () => {
+  if (isAnchorLink.value && props.to) {
+    scrollToTargetSection(props.to)
+  }
+}
 </script>
 
 <style>

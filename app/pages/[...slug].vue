@@ -9,9 +9,6 @@ const slug: string | string[] | undefined  = route.params.slug;
 const isStoryblokEditor = !!route.query._storyblok;
 
 const storyPath: ComputedRef<string> = computed(() => {
-  console.log({
-    slug,
-  })
   if (!slug) return '/pages'
 
   // Concatenate array to get the full slug path (e.g., ['about', 'team'] -> 'about/team')

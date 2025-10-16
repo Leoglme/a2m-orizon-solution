@@ -9,11 +9,11 @@ export default defineNuxtConfig({
         head: {
             title: 'A2M ÔRIZON SOLUTION - Assistance sociale Paris Île-de-France',
             script: [
-                {
+                ...(process.env.NODE_ENV === 'production' ? [{
                     src: 'https://umami.a2m-orizon-solutionsocial.fr/script.js',
                     defer: true,
                     'data-website-id': 'ecbfe143-fc09-4574-917b-413ca729e1ac',
-                },
+                }] : []),
             ],
         },
     },

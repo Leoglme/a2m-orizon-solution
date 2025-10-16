@@ -1,5 +1,6 @@
 <template>
-  <div
+  <section
+      :id="props.blok.sectionId"
       :class="`self-stretch ${backgroundColor(
       props.blok.backgroundColor,
     )} flex justify-center`"
@@ -14,16 +15,18 @@
       <div
           :class="`
           flex-1 p-6 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
-          ${layoutPosition(props.blok)}`"
+          ${layoutPosition(props.blok)} ${props.blok.layoutPosition === 'center' ? 'lg:pt-20!': undefined}`"
       >
         <RichTextView
             :doc="props.blok.description"
             :blok="props.blok"
         />
-        <div class="flex gap-2 md:gap-4 flex-wrap items-center">
+        <div
+            v-if="props.blok.buttons && props.blok.buttons.length > 0"
+            class="flex gap-2 md:gap-4 flex-wrap items-center mt-4">
           <slot
               v-for="button in props.blok.buttons">
-            <Button :blok="button" />
+              <Button :blok="button"/>
           </slot>
         </div>
       </div>
@@ -45,15 +48,15 @@
         </div>
       </slot>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { HeroContent } from '~/content'
+import type {PropType} from 'vue'
+import type {HeroContent} from '~/content'
 import RichTextView from '~/components/RichText.vue'
 import Button from './Button.vue'
-import { backgroundColor } from './backgroundColorClass'
+import {backgroundColor} from './backgroundColorClass'
 
 const rootAlignment = (content: HeroContent): string => {
   if (!content.image) {

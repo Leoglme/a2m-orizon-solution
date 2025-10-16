@@ -1,10 +1,13 @@
 <template>
-  <section :class="sectionClasses" v-editable="props.blok">
-    <div class="mx-auto w-full max-w-6xl">
+  <section class="self-stretch justify-center px-5 py-10 md:px-20 md:py-24 items-center flex min-h-screen w-full" :id="props.blok.sectionId" :class="sectionClasses" v-editable="props.blok">
+    <div class="grid gap-28 w-full p-4 md:p-10 max-w-[1500px]">
       <div class="mb-6 sm:mb-8">
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
-          {{ props.blok.title || 'Envoyez-moi un message' }}
-        </h2>
+        <div class="flex items-center justify-center gap-8">
+          <ChatIcon />
+          <h2 class="text-center text-3xl sm:text-5xl font-extrabold tracking-tight">
+            {{ props.blok.title || 'Envoyez-nous un message' }}
+          </h2>
+        </div>
 
         <slot v-if="props.blok.description">
           <RichTextView :doc="props.blok.description" :blok="props.blok" />
@@ -14,8 +17,11 @@
       <!-- FORM -->
       <form class="flex flex-col gap-6" @submit.prevent="onSubmit">
         <!-- Objet -->
-        <div class="flex flex-col gap-2">
-          <label class="text-sm font-medium text-stone-700">Objet de votre message</label>
+        <div class="flex flex-col gap-4">
+          <A2MLabel id="subject">
+            Objet de votre message
+          </A2MLabel>
+
           <A2MTogglePillGroup
               v-model:value="subject"
               :options="normalizedOptions"
@@ -59,14 +65,15 @@
 
         <!-- Bouton -->
         <div class="flex justify-end">
-          <Button
+          <A2MButton
               v-if="props.blok.button?.[0]"
-              :blok="props.blok.button[0]"
-              :className="'!px-5 !py-3'"
-              :disabled="loading"
+              class="self-center"
+              to="/"
+              :size="props.blok.button?.[0]?.size"
+              :disabled="false"
           >
             {{ loading ? 'Envoi en cours…' : (props.blok.button?.[0]?.text || 'Envoyer mon message') }}
-          </Button>
+          </A2MButton>
         </div>
 
         <!-- Messages -->
@@ -87,6 +94,10 @@ import RichTextView from '~/components/RichText.vue'
 import Button from './Button.vue'
 import A2MTogglePillGroup from '~/components/ui/A2MTogglePillGroup.vue'
 import A2mInput from '~/components/core/A2mInput.vue'
+import {backgroundColor} from "~/storyblok/backgroundColorClass";
+import ChatIcon from "~/components/icons/ChatIcon.vue";
+import A2MButton from "~/components/core/A2MButton.vue";
+import A2MLabel from "~/components/core/A2MLabel.vue";
 
 const props: ContactSectionProps = defineProps({
   blok: { type: Object as PropType<ContactSectionContent>, required: true },
@@ -130,13 +141,10 @@ const placeholders = computed(() => ({
 const fullName = ref<string>(''); const email = ref<string>(''); const message = ref<string>('')
 const loading = ref(false); const submitted = ref(false)
 const errorMessage = ref<string | undefined>(); const successMessage = ref<string | undefined>()
-
 /* 5) Styles section */
-const sectionClasses = `w-full px-4 py-10 sm:px-8 sm:py-16 md:px-20 md:py-24 ${
-    props.blok.backgroundColor === 'grey' ? 'bg-neutral-100'
-        : props.blok.backgroundColor === 'white' ? 'bg-white'
-            : 'bg-white'
-}`
+const sectionClasses: string = `${backgroundColor(
+    props.blok.backgroundColor,
+)}`
 
 /* Utils */
 function isValidEmail(e: string): boolean {
