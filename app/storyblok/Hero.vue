@@ -6,15 +6,15 @@
     )} flex justify-center`"
       v-editable="props.blok">
     <div
-        :class="`w-full ${
-        props.blok.imagePadding ? 'p-4 md:p-10' : 'p-0'
+        :class="`w-full gap-10 sm:gap-0 ${
+        props.blok.imagePadding ? 'px-6 md:px-10 py-10' : 'p-0'
       } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-[1500px]
         ${props.blok.layoutPosition === 'center' ? 'pt-0!': undefined}
       `"
     >
       <div
           :class="`
-          flex-1 p-6 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
+          flex-1 p-0 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
           ${layoutPosition(props.blok)} ${props.blok.layoutPosition === 'center' ? 'lg:pt-20!': undefined}`"
       >
         <RichTextView
@@ -23,16 +23,16 @@
         />
         <div
             v-if="props.blok.buttons && props.blok.buttons.length > 0"
-            class="flex gap-2 md:gap-4 flex-wrap items-center mt-4">
+            class="flex gap-2 md:gap-4 flex-wrap items-center mt-4 w-full sm:w-auto">
           <slot
               v-for="button in props.blok.buttons">
-              <Button :blok="button"/>
+              <Button class="w-full sm:w-auto" :blok="button"/>
           </slot>
         </div>
       </div>
       <slot v-if="props.blok.image">
         <div
-            :class="`relative flex-1 overflow-hidden md:min-h-[650px] ${
+            :class="`relative flex-1 overflow-hidden min-h-[400px] md:min-h-[650px] ${
             props.blok.imagePadding
               ? 'rounded-xl max-h-[60vw] min-h-[40vw] md:max-h-[800px]'
               : 'rounded-none max-h-[100%] min-h-[40vw] md:min-h-[100%]'
