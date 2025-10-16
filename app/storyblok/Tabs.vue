@@ -1,6 +1,6 @@
 <template>
   <div
-      class="self-stretch flex justify-center bg-white px-4 py-8 sm:px-8 sm:py-16 md:px-20 md:py-24"
+      class="self-stretch flex justify-center bg-white px-5 py-12 sm:px-8 sm:py-16 md:px-20 md:py-24"
       v-editable="props.blok">
     <div
         class="flex-1 flex flex-col justify-start items-center gap-8 md:gap-14 max-w-7xl">
@@ -8,19 +8,21 @@
         <RichTextView :doc="props.blok.description" :blok="props.blok" />
       </div>
       <div class="self-stretch flex flex-col items-stretch gap-4 md:gap-5">
+
+
         <div
-            class="self-stretch p-1 bg-white rounded-lg outline-1 outline-offset-[-1px] outline-stone-900 inline-flex justify-start items-center gap-2">
+            class="overflow-x-auto max-w-[85vw] self-stretch p-1 bg-white rounded-lg outline-1 outline-offset-[-1px] outline-stone-900 inline-flex justify-start items-center gap-2">
           <slot
               v-for="tab in props.blok.tabs">
             <button
                 @click="async (_event) => (currentTabUid = tab._uid)"
-                :class="`flex-1 py-2 text-sm sm:py-3 sm:text-base md:py-4 ${
+                :class="`flex-1 py-2 text-sm sm:py-3 sm:text-base md:py-4 min-w-28 ${
                 currentTabUid === tab._uid
                   ? 'bg-primary text-white'
-                  : 'bg-transparent text-stone-800 '
+                  : 'bg-transparent text-stone-800 cursor-pointer hover:bg-stone-100'
               } rounded-lg flex justify-center items-center gap-0.5`"
                 v-editable="tab">
-              <div class="justify-center text-base font-bold leading-snug">
+              <div class="justify-center font-bold leading-snug">
                 {{ tab.title }}
               </div>
             </button>
