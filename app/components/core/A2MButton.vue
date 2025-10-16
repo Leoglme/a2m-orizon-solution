@@ -97,7 +97,7 @@ const buttonSizes: Record<A2MButtonSize, string> = {
   xs: 'px-6 py-1 text-xs',
   sm: 'px-10 py-3 text-sm',
   md: 'px-20 py-3.5 text-sm',
-  lg: 'px-24 py-4 text-sm',
+  lg: 'px-5 py-4 sm:px-24 sm:py-4 text-base sm:text-sm',
   xl: 'px-28 py-5 text-lg',
   '2xl': 'px-32 py-6 text-lg',
 }
