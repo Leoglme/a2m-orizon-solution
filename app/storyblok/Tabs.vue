@@ -1,9 +1,9 @@
 <template>
   <div
-      class="self-stretch flex justify-center bg-white px-5 py-12 sm:px-8 sm:py-16 md:px-20 md:py-24"
+      class="self-stretch flex justify-center bg-white px-5 pt-24 pb-24 sm:px-8 sm:py-16 md:px-20 md:py-24"
       v-editable="props.blok">
     <div
-        class="flex-1 flex flex-col justify-start items-center gap-8 md:gap-14 max-w-7xl">
+        class="flex-1 flex flex-col justify-start items-center gap-16 sm:gap-14 max-w-7xl">
       <div class="self-stretch flex flex-col justify-start items-center gap-2">
         <RichTextView :doc="props.blok.description" :blok="props.blok" />
       </div>
@@ -11,7 +11,7 @@
 
 
         <div
-            class="overflow-x-auto max-w-[85vw] self-stretch p-1 bg-white rounded-lg outline-1 outline-offset-[-1px] outline-stone-900 inline-flex justify-start items-center gap-2">
+            class="overflow-x-auto max-w-[92vw] sm:max-w-none self-stretch p-1 bg-white rounded-lg outline-1 outline-offset-[-1px] outline-stone-900 inline-flex justify-start items-center gap-2">
           <slot
               v-for="tab in props.blok.tabs">
             <button

@@ -1,0 +1,32 @@
+<template>
+  <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      :class="props.className">
+    <line x1="22" y1="2" x2="11" y2="13"/>
+    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+  </svg>
+</template>
+
+
+<script setup lang="ts">
+import type {PropType} from "vue";
+
+export type SendIconProps = {
+  className?: string
+}
+
+const props: SendIconProps = defineProps({
+  className: {
+    type: String as PropType<string>,
+    required: false,
+    default: undefined,
+  },
+})
+</script>

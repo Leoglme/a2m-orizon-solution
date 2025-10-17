@@ -1,5 +1,5 @@
 <template>
-  <label :for="props.id" class="text-base font-medium tracking-tight text-stone-900">
+  <label :for="props.id" class="text-base font-semibold tracking-tight text-stone-900">
     <slot />
   </label>
 </template>

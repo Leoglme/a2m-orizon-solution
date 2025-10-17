@@ -1,22 +1,22 @@
 <template>
   <section
       :id="props.blok.sectionId"
-      class="self-stretch px-5 py-10 md:px-20 md:py-24 items-center flex flex-col"
+      class="self-stretch px-5 pt-16 pb-24 md:px-20 md:py-24 items-center flex flex-col"
       :class="backgroundColor(props.blok.backgroundColor)"
       v-editable="props.blok">
     <div class="max-w-6xl flex flex-col gap-10">
       <div
-          class="self-stretch flex-1 inline-flex justify-center items-start flex-col md:flex-row gap-2">
+          class="lg:self-stretch flex-1 inline-flex lg:justify-center items-start flex-col lg:flex-row gap-10 md:gap-2">
         <RichTextView :doc="props.blok.description" :blok="props.blok" />
         <slot
             v-if="props.blok.button"
             v-for="button in props.blok.button"
         >
-          <BlockButton v-if="button" :blok="button" class="min-w-fit" />
+          <BlockButton v-if="button" :blok="button" class="min-w-fit w-full sm:w-auto hidden! sm:block!" />
         </slot>
       </div>
       <div
-          class="self-stretch grid justify-start items-stretch gap-4 md:gap-6 flex-col md:grid-cols-3">
+          class="self-stretch grid justify-start items-stretch gap-6 flex-col md:grid-cols-3">
         <slot
             v-for="card in blok.cards"
         >

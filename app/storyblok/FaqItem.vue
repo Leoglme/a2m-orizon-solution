@@ -8,7 +8,7 @@
           :class="!props.isOpen ? 'hover:bg-neutral-50 cursor-pointer' : ''"
           @click="!props.isOpen ? $emit('toggle') : undefined">
         <span
-            class="text-sm sm:text-base md:text-lg font-semibold"
+            class="text-base md:text-lg font-semibold"
             :class="props.isOpen ? 'text-primary' : 'text-stone-900'"
         >
           {{ props.blok.question }}
@@ -32,7 +32,7 @@
         :id="contentId"
         class="text-sm sm:text-base px-4 sm:px-6 pb-5"
         role="region">
-      <RichTextView :doc="props.blok.answer" :blok="props.blok" />
+      <RichTextView :doc="props.blok.answer" :blok="props.blok" class="sm:text-sm" />
     </div>
   </div>
 </template>

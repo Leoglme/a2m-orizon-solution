@@ -1,7 +1,6 @@
 <template>
   <A2MButton
       v-if="props.blok"
-      class="self-center"
       :to="to"
       :size="props.blok.size"
       :backgroundColor="backgroundColor"

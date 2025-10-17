@@ -7,9 +7,9 @@
       v-editable="props.blok">
     <div
         :class="`w-full gap-10 sm:gap-0 ${
-        props.blok.imagePadding ? 'px-6 md:px-10 py-10' : 'p-0'
+        props.blok.imagePadding ? 'px-6 md:px-10 pb-24 pt-10 sm:py-10' : 'p-0'
       } ${rootAlignment(props.blok)} flex-wrap justify-between max-w-[1500px]
-        ${props.blok.layoutPosition === 'center' ? 'pt-0!': undefined}
+        ${props.blok.layoutPosition === 'center' ? 'sm:pt-0!': undefined}
       `"
     >
       <div

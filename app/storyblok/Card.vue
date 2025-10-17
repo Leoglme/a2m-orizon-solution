@@ -8,7 +8,7 @@
       v-editable="props.blok">
     <slot v-if="props.blok.icon">
       <img
-          class="box-content w-10 h-10 sm:w-[36px] sm:h-[36px]"
+          class="box-content w-8 h-8 sm:w-[36px] sm:h-[36px]"
           :src="props.blok.icon?.filename"
           :alt="props.blok.icon?.alt ?? ''"
           :width="36"
@@ -16,7 +16,7 @@
       />
     </slot>
 
-    <RichTextView class="flex-1" :doc="props.blok.description" :blok="props.blok"/>
+    <RichTextView class="flex-1 sm:text-sm" :doc="props.blok.description" :blok="props.blok"/>
 
     <slot
         v-if="props.blok.button"

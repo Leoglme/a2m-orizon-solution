@@ -1,9 +1,9 @@
 <template>
   <section class="min-h-[85vh] flex items-center justify-center w-full" :class="sectionClasses" v-editable="props.blok">
-    <div class="w-full p-4 md:p-10 flex flex-col md:flex-row flex-wrap justify-between max-w-[1500px]">
+    <div class="w-full px-6 pt-16 pb-24 md:p-10 flex flex-col md:flex-row flex-wrap justify-between max-w-[1500px] gap-16 sm:gap-0">
       <!-- Colonne gauche -->
-      <div class="flex-1 px-6 md:px-12 lg:px-20 py-4 inline-flex flex-col justify-start
-          items-start gap-12">
+      <div class="flex-1 md:px-12 lg:px-20 py-4 inline-flex flex-col justify-start
+          items-start gap-8 sm:gap-12">
         <h2 class="text-2xl sm:text-[44px] font-extrabold tracking-tight">
           {{ props.blok.title || 'Notre secteur d’intervention' }}
         </h2>
@@ -20,8 +20,8 @@
           </li>
         </ul>
 
-        <div v-if="props.blok.button?.[0]" class="pt-2">
-          <Button :blok="props.blok.button[0]" />
+        <div v-if="props.blok.button?.[0]" class="pt-2 w-full sm:w-auto">
+          <Button :blok="props.blok.button[0]" class="w-full sm:w-auto" />
         </div>
       </div>
       <div class="flex-1 border border-stone-900 rounded-xl">

@@ -8,6 +8,7 @@
     --color-primary-light: #045DC3;
     --color-secondary: #EC9E0A;
     --color-secondary-light: #F1A01E;
+    --color-accent: #218AAA;
     --color-blue-200: #F3F6FC;
     --color-gray-100: #f5f4fb;
     --color-gray-300: rgba(255, 255, 255, 0.4);
@@ -55,6 +56,7 @@ input[type='number']::-webkit-inner-spin-button {
 
     .rich-text h1 {
         @apply text-[38px] font-extrabold mb-6 mt-2 leading-12;
+        word-break: break-word;
     }
 
     .rich-text .max-w-5xl {
@@ -62,35 +64,38 @@ input[type='number']::-webkit-inner-spin-button {
     }
 
     .rich-text .leading-xl {
-        @apply leading-[115px] mt-0;
+        @apply leading-18 mt-0;
     }
 
     .rich-text .leading-lg {
-        @apply leading-[100px] mt-0;
+        @apply leading-16 mt-0;
     }
 
     .rich-text h2 {
-        @apply text-3xl font-extrabold mt-2 mb-5 leading-8;
+        @apply text-3xl font-extrabold mt-2 mb-5 leading-10;
     }
 
     .rich-text h3 {
-        @apply text-4xl font-extrabold mt-8 mb-4;
+        @apply text-2xl font-extrabold mt-2 mb-4 leading-10;
     }
 
     .rich-text h4 {
-        @apply text-3xl font-extrabold mt-6 mb-3;
+        @apply text-xl font-extrabold mt-2 mb-3 leading-10;
     }
 
     .rich-text h5 {
-        @apply text-2xl font-extrabold mt-5 mb-2;
+        @apply text-xl font-extrabold mt-2 mb-2;
     }
 
     .rich-text h6 {
-        @apply text-xl font-extrabold mt-4 mb-2;
+        @apply text-base font-extrabold mt-2 mb-2;
     }
 
     .rich-text p {
         @apply text-base mb-3;
+    }
+    .rich-text.text-sm p {
+        @apply text-sm;
     }
 
     .rich-text a {
@@ -106,11 +111,60 @@ input[type='number']::-webkit-inner-spin-button {
         }
 
         .rich-text h2 {
-            @apply text-5xl mt-10 leading-16;
+            @apply text-5xl leading-16 mt-10;
+        }
+
+        .rich-text h3 {
+            @apply text-4xl mt-8;
+        }
+
+        .rich-text h4 {
+            @apply text-3xl mt-6;
+        }
+
+        .rich-text h5 {
+            @apply text-2xl mt-5;
+        }
+
+        .rich-text h6 {
+            @apply text-xl mt-4;
         }
 
         .rich-text p {
             @apply my-6;
+        }
+
+        .rich-text .leading-xl {
+            @apply leading-[115px];
+        }
+
+        .rich-text .leading-lg {
+            @apply leading-[100px];
+        }
+    }
+
+    @media (max-width: 28rem) {
+        #prestation-landing .rich-text h1 {
+            @apply text-3xl;
+        }
+        .highlight {
+            @apply px-5! py-2!;
+        }
+    }
+
+    @media (max-width: 40rem) {
+        .rich-text.sm\:text-sm p {
+            @apply text-sm;
+        }
+
+        #tabs-content > div {
+            padding: 32px 20px 24px 20px;
+        }
+
+        #our-values-and-commitments > div,
+        #contact-cta > div,
+        #benefits-and-approach > div {
+            padding: 100px 24px 100px 24px;
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
   <div
-      class="rich-text w-full flex flex-col justify-start items-start gap-2"
+      class="rich-text w-full flex flex-col justify-start items-start gap-3 sm:gap-2"
       v-html="renderedContent"
       v-editable="blok"
   />

@@ -105,7 +105,7 @@ const buttonSizes: Record<A2MButtonSize, string> = {
 
 const computedClass: ComputedRef<string> = computed(
     () => `
-  self-center rounded-lg inline-flex flex-col items-center gap-2.5 overflow-hidden text-center justify-center text-white font-semibold leading-tight bg-primary hover:bg-primary-light
+  rounded-lg inline-flex flex-col items-center gap-2.5 overflow-hidden text-center justify-center text-white font-semibold leading-tight bg-primary hover:bg-primary-light
   focus:outline-none focus:shadow-outline transition duration-150 ease-in-out select-none
   ${props.disabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
   ${buttonSizes[props.size]}
@@ -136,12 +136,8 @@ const componentType: ComputedRef<string> = computed(() => {
  */
 const scrollToTargetSection: (ctaTarget: string) => void = (ctaTarget: string): void => {
   const targetSection: HTMLElement | null = document.querySelector(ctaTarget)
-  console.log({
-    ctaTarget,
-    targetSection
-  })
   if (targetSection) {
-    const offset: number = 85
+    const offset: number = 79 // navbar height offset
     const top: number = targetSection.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({
       top,

@@ -1,6 +1,6 @@
 <template>
   <div
-      :class="`self-stretch px-4 sm:px-10 pt-10 pb-6 bg-stone-900 flex flex-col lg:flex-row justify-center lg:justify-between items-center overflow-hidden lg:px-20 md:pt-20 md:pb-10 gap-24 ${props.className}`">
+      :class="`self-stretch px-4 sm:px-10 pt-10 pb-10 sm:pb-6 bg-stone-900 flex flex-col lg:flex-row justify-center lg:justify-between items-center overflow-hidden lg:px-20 md:pt-20 md:pb-10 gap-24 ${props.className}`">
     <div class="self-stretch flex flex-col justify-center items-center gap-8 md:gap-12">
       <div
           class="self-stretch flex flex-col justify-start items-center gap-2.5 md:flex-row md:items-center">
@@ -19,7 +19,7 @@
             class="w-full flex flex-col justify-start items-start gap-6 md:w-[453.38px] md:gap-10">
           <RichTextView
               v-if="props.blok.description"
-              class="self-stretch text-white text-sm font-normal leading-relaxed sm:text-base"
+              class="self-stretch text-white sm:text-sm font-normal leading-relaxed md:text-base"
               :doc="props.blok.description"
               :blok="props.blok"
           />

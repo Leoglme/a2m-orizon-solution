@@ -1,9 +1,11 @@
 <template>
-  <section class="self-stretch justify-center px-5 py-10 md:px-20 md:py-24 items-center flex min-h-screen w-full" :id="props.blok.sectionId" :class="sectionClasses" v-editable="props.blok">
-    <div class="grid gap-28 w-full p-4 md:p-10 max-w-[1500px]">
+  <section class="self-stretch justify-center px-5 pt-28 pb-40 md:px-20 md:py-24 items-center flex min-h-screen w-full" :id="props.blok.sectionId" :class="sectionClasses" v-editable="props.blok">
+    <div class="grid gap-16 sm:gap-28 w-full md:p-10 max-w-[1500px]">
       <div class="mb-6 sm:mb-8">
-        <div class="flex items-center justify-center gap-8">
-          <ChatIcon />
+        <div class="flex items-center justify-center gap-6 sm:gap-8 flex-col sm:flex-row">
+          <ChatIcon
+              className="w-10 h-10 sm:w-12.5 sm:h-12.5"
+          />
           <h2 class="text-center text-3xl sm:text-5xl font-extrabold tracking-tight">
             {{ props.blok.title || 'Envoyez-nous un message' }}
           </h2>
@@ -67,12 +69,13 @@
         <div class="flex justify-end">
           <A2MButton
               v-if="props.blok.button?.[0]"
-              class="self-center"
+              class="self-center w-full sm:w-auto"
               to="/"
               :size="props.blok.button?.[0]?.size"
               :disabled="false"
           >
             {{ loading ? 'Envoi en cours…' : (props.blok.button?.[0]?.text || 'Envoyer mon message') }}
+            <SendIcon className="ml-3" />
           </A2MButton>
         </div>
 
@@ -98,6 +101,7 @@ import {backgroundColor} from "~/storyblok/backgroundColorClass";
 import ChatIcon from "~/components/icons/ChatIcon.vue";
 import A2MButton from "~/components/core/A2MButton.vue";
 import A2MLabel from "~/components/core/A2MLabel.vue";
+import SendIcon from "~/components/icons/SendIcon.vue";
 
 const props: ContactSectionProps = defineProps({
   blok: { type: Object as PropType<ContactSectionContent>, required: true },

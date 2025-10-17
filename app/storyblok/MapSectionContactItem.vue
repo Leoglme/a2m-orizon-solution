@@ -5,7 +5,7 @@
         :link="link"
         color="#1F1F1F">
       <div
-          class="flex flex-wrap w-full items-center justify-baseline gap-3"
+          class="flex w-full items-center justify-baseline gap-3"
       >
         <ContactIcon
             :iconType="props.blok.icon"
@@ -17,7 +17,7 @@
     </A2MLink>
     <div
         v-else
-        class="flex flex-wrap w-full items-center justify-baseline gap-3"
+        class="flex w-full items-center justify-baseline gap-3"
     >
       <ContactIcon
           :iconType="props.blok.icon"

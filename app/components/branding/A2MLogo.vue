@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-4">
     <svg
         :width="props.size"
         :height="props.size"
@@ -16,12 +16,16 @@
           d="M14.3618 15.0963L15.3295 16.064H16.2972H17.2649L18.2326 15.0963L19.2003 14.1286H18.7604C18.4173 14.1286 18.1006 14.2341 17.3616 14.5684C16.8338 14.8147 16.3587 15.0083 16.2972 15.0083C16.2356 15.0083 15.7605 14.8147 15.2327 14.5684C14.4937 14.2341 14.177 14.1286 13.8339 14.1286H13.394L14.3618 15.0963Z"
           fill="#EC9E0A"/>
     </svg>
-    <span
-        v-if="props.large"
-        class="text-primary text-sm sm:text-base font-bold leading-6 sm:leading-7"
-    >
-      A2M ÔRIZON SOLUTION
+    <div class="grid">
+        <span
+            v-if="props.large"
+            class="text-primary text-sm sm:text-base font-bold leading-4 sm:leading-7">
+        A2M ÔRIZON SOLUTION
     </span>
+      <span class="font-semibold text-xs text-accent">
+      Le travail social autrement
+    </span>
+    </div>
   </div>
 </template>
 
