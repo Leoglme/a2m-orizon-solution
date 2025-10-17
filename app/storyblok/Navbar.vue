@@ -1,9 +1,9 @@
 <template>
   <nav
       :class="[
-      'top-0 right-0 left-0 z-50 flex h-auto sm:h-22 max-w-screen items-center border-b border-stone-900 bg-white',
+      'top-0 right-0 left-0 z-50 flex h-auto sm:h-20 max-w-screen items-center border-b border-stone-900 bg-white',
       props.blok.backdrop ? 'bg-white/75 backdrop-blur-[12px] backdrop-saturate-[1.8]' : '',
-      'px-4 sm:px-8 lg:px-20 py-4 sm:py-0 transition-all duration-600 ease-linear',
+      'px-4 sm:px-8 lg:px-20 py-3 sm:py-0 transition-all duration-600 ease-linear',
       props.blok.sticky !== false ? 'fixed' : 'relative'
     ]"
       v-editable="props.blok">
@@ -12,7 +12,7 @@
       <ol>
         <li>
           <NuxtLink to="/">
-            <A2MLogo :size="30" :large="true" />
+            <A2MLogo :size="35" :large="true" />
           </NuxtLink>
         </li>
       </ol>

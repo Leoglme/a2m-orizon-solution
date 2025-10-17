@@ -1,6 +1,6 @@
 <template>
   <div
-      class="flex flex-col items-stretch pt-20 sm:pt-22"
+      class="flex flex-col items-stretch pt-[76px] sm:pt-20"
       v-editable="props.blok"
   >
     <slot

@@ -137,7 +137,7 @@ const componentType: ComputedRef<string> = computed(() => {
 const scrollToTargetSection: (ctaTarget: string) => void = (ctaTarget: string): void => {
   const targetSection: HTMLElement | null = document.querySelector(ctaTarget)
   if (targetSection) {
-    const offset: number = 79 // navbar height offset
+    const offset: number = 76 // navbar height offset
     const top: number = targetSection.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({
       top,
