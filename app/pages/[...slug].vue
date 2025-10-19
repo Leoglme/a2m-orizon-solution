@@ -24,6 +24,7 @@ const slugSegments: ComputedRef<string[]> = computed(() => {
  */
 const storyPath: ComputedRef<string> = computed(() => {
   const segments: string[] = slugSegments.value.filter(Boolean)
+  console.log('Slug segments:', segments)
   if (segments.length === 0) return 'pages'
 
   if (segments[0] === 'emails') {
