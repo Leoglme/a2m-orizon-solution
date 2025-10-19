@@ -33,39 +33,12 @@ jobs:
           sed -i "s/^MAILJET_API_KEY=.*/MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}/" .env || echo "MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}" >> .env
           sed -i "s/^MAILJET_API_SECRET=.*/MAILJET_API_SECRET=${{ secrets.MAILJET_API_SECRET }}/" .env || echo "MAILJET_API_SECRET=${{ secrets.MAILJET_API_SECRET }}" >> .env
 
-      - name: 🛠️ Generate Static Site (Frontend)
-        run: npm run generate
-        env:
-          NITRO_PRESET: static
-
-      - name: 📂 Save static site output
-        run: |
-          if [ -d ".output/public" ]; then
-            mkdir -p tmp
-            mv .output/public tmp/public-static
-            echo "Static site output saved to tmp/public-static"
-          else
-            echo "Error: .output/public does not exist after npm run generate"
-            exit 1
-          fi
-
-      - name: 🛠️ Build Server (Nitro)
+      - name: 🛠️ Build Nitro (SSR)
         run: npm run build
         env:
           NITRO_PRESET: node-server
 
-      - name: 📂 Restore static site output
-        run: |
-          if [ -d "tmp/public-static" ]; then
-            rm -rf .output/public
-            mv tmp/public-static .output/public
-            echo "Static site output restored to .output/public"
-          else
-            echo "Error: tmp/public-static does not exist"
-            exit 1
-          fi
-
-      - name: 📤 Deploy static files to VPS
+      - name: 📤 Deploy client assets
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -87,18 +60,7 @@ jobs:
           target: '/var/www/a2m-orizon-solutionsocial.fr/server'
           strip_components: 2
 
-      - name: 📤 Deploy .env to html folder
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: '.env'
-          target: '/var/www/a2m-orizon-solutionsocial.fr/html'
-          strip_components: 0
-
-      - name: 📤 Deploy .env to server folder
+      - name: 📤 Deploy .env to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -107,7 +69,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: '.env'
           target: '/var/www/a2m-orizon-solutionsocial.fr/server'
-          strip_components: 0
 
       - name: 🛠️ Start Nitro server
         uses: appleboy/ssh-action@master

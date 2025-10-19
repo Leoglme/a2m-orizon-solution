@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import mkcert from "vite-plugin-mkcert";
 import tailwindcss from '@tailwindcss/vite'
-import type {LinksResponse} from "./app/services/types/storyblok";
-import {StoryblokService} from "./app/services/storyblokService";
 
 export default defineNuxtConfig({
     app: {
@@ -45,22 +43,5 @@ export default defineNuxtConfig({
             mkcert(),
             tailwindcss()
         ],
-    },
-    // Dynamically generate routes from Storyblok
-    hooks: {
-        'prerender:routes': async (ctx) => {
-            try {
-                const linksResponse: LinksResponse = await StoryblokService.getLinks()
-                const routes: string[] = Object.values(linksResponse.links)
-                    .map((link) => link.real_path || link.slug)
-                    .filter((route): route is string => !!route)
-                // console.log(`Prerender routes: ${JSON.stringify(routes, null, 2)}`)
-                for (const route of routes) {
-                    ctx.routes.add(route)
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération des routes Storyblok:', error)
-            }
-        },
     },
 })
