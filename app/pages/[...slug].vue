@@ -5,7 +5,6 @@ import { useRoute } from 'nuxt/app';
 import type { RouteLocationNormalizedLoadedGeneric } from "#vue-router";
 
 const route: RouteLocationNormalizedLoadedGeneric = useRoute();
-const slug: string | string[] | undefined  = route.params.slug;
 const isStoryblokEditor = !!route.query._storyblok;
 
 /**
