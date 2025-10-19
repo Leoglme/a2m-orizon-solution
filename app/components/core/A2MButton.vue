@@ -1,7 +1,8 @@
 <template>
   <component
       class="a2m-button"
-      :is="componentType"
+      :is="componentType === 'button' ? 'a' : componentType"
+      :role="componentType === 'button' ? 'button' : undefined"
       :to="isLink ? props.to : undefined"
       :href="isExternalLink || isLink ? props.to : undefined"
       :disabled="props.disabled"

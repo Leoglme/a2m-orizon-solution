@@ -55,3 +55,14 @@ export interface StoryblokLink {
 export interface LinksResponse {
     links: Record<string, StoryblokLink>;
 }
+
+
+/**
+ * Interface for the Story response from Storyblok API.
+ * @interface StoryResponse
+ * @template TStory - The type of the story content.
+ * @property {TStory} story - The story data.
+ */
+export interface StoryResponse<TStory> {
+    story: TStory
+}

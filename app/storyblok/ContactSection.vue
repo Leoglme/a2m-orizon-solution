@@ -17,132 +17,28 @@
       </div>
 
       <!-- FORM -->
-      <form class="flex flex-col gap-6" @submit.prevent="onSubmit">
-        <!-- Objet -->
-        <div class="flex flex-col gap-4">
-          <A2MLabel id="subject">
-            Objet de votre message
-          </A2MLabel>
-
-          <A2MTogglePillGroup
-              v-model:value="subject"
-              :options="normalizedOptions"
-          />
-        </div>
-
-        <!-- Nom / Email -->
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <A2mInput
-              id="fullName"
-              label="Nom et prénom"
-              :value="fullName"
-              :rules="'required'"
-              :placeholder="placeholders.name"
-              :invalid="submitted && !fullName"
-              @update:value="fullName = ($event as string)"
-          />
-          <A2mInput
-              id="email"
-              label="Email"
-              type="email"
-              :value="email"
-              :rules="'required|email'"
-              :placeholder="placeholders.email"
-              :invalid="submitted && !isValidEmail(email)"
-              @update:value="email = ($event as string)"
-          />
-        </div>
-
-        <!-- Message -->
-        <A2mInput
-            id="message"
-            label="Message"
-            :rows="6"
-            :value="message"
-            :rules="'required'"
-            :placeholder="placeholders.message"
-            :invalid="submitted && !message"
-            @update:value="message = ($event as string)"
-        />
-
-        <!-- Bouton -->
-        <div class="flex justify-end">
-          <A2MButton
-              v-if="props.blok.button?.[0]"
-              class="self-center w-full sm:w-auto"
-              to="/"
-              :size="props.blok.button?.[0]?.size"
-              :disabled="false"
-          >
-            {{ loading ? 'Envoi en cours…' : (props.blok.button?.[0]?.text || 'Envoyer mon message') }}
-            <SendIcon className="ml-3" />
-          </A2MButton>
-        </div>
-
-        <!-- Messages -->
-        <p v-if="errorMessage" class="text-sm text-red-600">{{ errorMessage }}</p>
-        <p v-if="successMessage" class="text-sm text-green-700">{{ successMessage }}</p>
-      </form>
+      <A2MContactForm
+        :subjects="props.blok.subjects"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import type { PropType, ComputedRef, Ref } from 'vue'
-import type { ContactSectionContent, PillOptionContent } from '~/content'
-import type { Option as ToggleOption } from '~/components/ui/A2MTogglePillGroup.vue'
+import type { PropType } from 'vue'
+import type { ContactSectionContent } from '~/content'
 export type ContactSectionProps = { blok: ContactSectionContent }
 import { computed, ref } from 'vue'
 import RichTextView from '~/components/RichText.vue'
-import Button from './Button.vue'
-import A2MTogglePillGroup from '~/components/ui/A2MTogglePillGroup.vue'
-import A2mInput from '~/components/core/A2mInput.vue'
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
 import ChatIcon from "~/components/icons/ChatIcon.vue";
-import A2MButton from "~/components/core/A2MButton.vue";
-import A2MLabel from "~/components/core/A2MLabel.vue";
-import SendIcon from "~/components/icons/SendIcon.vue";
+import A2MContactForm from "~/components/forms/A2MContactForm.vue";
 
 const props: ContactSectionProps = defineProps({
   blok: { type: Object as PropType<ContactSectionContent>, required: true },
 })
 
-/* 1) Standardized pill options (with a Storyblok active flag) */
-const normalizedOptions: ComputedRef<ToggleOption[]> = computed(() =>
-    (props.blok.subjects || []).map((p: PillOptionContent) => ({
-      label: p.label,
-      value: p.value || p.label,
-    }))
-)
-
-/** 2) Initial subject: takes the 1st 'active' option, otherwise the first */
-const initialSubject: string = (() => {
-  const s: PillOptionContent[] = props.blok.subjects || []
-  const active: PillOptionContent | undefined = s.find((p) => p.active)
-  return (
-      (active?.value || active?.label) ||
-      (s[0]?.value || s[0]?.label) ||
-      ''
-  )
-})()
-
-/** 3) State */
-const subject: Ref<string> = ref(initialSubject)
-
-/* 3) Placeholders JSON (avec fallback) */
-const rawPlaceholders = computed(() => {
-  try { return JSON.parse(props.blok.placeholders || '{}') }
-  catch { return {} }
-}) as ComputedRef<{ name?: string; email?: string; message?: string }>
-
-const placeholders = computed(() => ({
-  name: rawPlaceholders.value.name || 'John Doe',
-  email: rawPlaceholders.value.email || 'email@exemple.com',
-  message: rawPlaceholders.value.message || 'Votre message…',
-}))
-
 /* 4) State formulaire */
-const fullName = ref<string>(''); const email = ref<string>(''); const message = ref<string>('')
 const loading = ref(false); const submitted = ref(false)
 const errorMessage = ref<string | undefined>(); const successMessage = ref<string | undefined>()
 /* 5) Styles section */

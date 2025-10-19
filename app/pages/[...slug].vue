@@ -8,13 +8,31 @@ const route: RouteLocationNormalizedLoadedGeneric = useRoute();
 const slug: string | string[] | undefined  = route.params.slug;
 const isStoryblokEditor = !!route.query._storyblok;
 
+/**
+ * Normalizes the URL segments of the current route into a table.
+ */
+const slugSegments: ComputedRef<string[]> = computed(() => {
+  const p: string | string[] | undefined = route.params?.slug
+  if (!p) return []
+  return Array.isArray(p) ? p : [p]
+})
+
+/**
+ * Built the Storyblok story path:
+ * - racine → "pages"
+ * - si 1er segment === "emails" → "emails/<reste>"
+ * - sinon → "pages/<tous les segments>"
+ */
 const storyPath: ComputedRef<string> = computed(() => {
-  if (!slug) return '/pages'
+  const segments: string[] = slugSegments.value.filter(Boolean)
+  if (segments.length === 0) return 'pages'
 
-  // Concatenate array to get the full slug path (e.g., ['about', 'team'] -> 'about/team')
-  const concatSlug: string = Array.isArray(slug) ? slug.join('/') : slug;
+  if (segments[0] === 'emails') {
+    const rest: string = segments.slice(1).join('/')
+    return rest ? `emails/${rest}` : 'emails'
+  }
 
-  return `/pages/${concatSlug}`
+  return `pages/${segments.join('/')}`
 })
 
 const { story } = await useAsyncStoryblok(

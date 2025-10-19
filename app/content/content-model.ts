@@ -26,6 +26,7 @@ export type Content =
     | FooterContent
     | FooterMenuContent
     | FooterMenuItemContent
+    | EmailContactTemplateContent
 
 export type BackgroundColor =
     | 'beige'
@@ -154,7 +155,6 @@ export type ContactSectionContent = BlockContent<{
     title?: string
     description?: RichTextContent
     subjects: PillOptionContent[]
-    button: ButtonContent[]
     placeholders?: string
     backgroundColor: BackgroundColor
 }>
@@ -199,4 +199,16 @@ export type FooterContent = BlockContent<{
     phoneNumber?: string
     email?: string
     menus?: FooterMenuContent[]
+}>
+
+
+export type EmailContactTemplateContent = BlockContent<{
+    component: 'email_contact_template'
+    subject: string
+    title: string
+    backgroundColor: BackgroundColor
+    body: string
+    footer?: string
+    ctaLabel?: string
+    ctaLink?: TLinkContent
 }>

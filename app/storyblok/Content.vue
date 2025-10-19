@@ -48,6 +48,17 @@
   <slot v-if="props.blok.component === 'footer'">
     <Footer :blok="props.blok" />
   </slot>
+  <slot v-if="props.blok.component === 'email_contact_template'">
+    <EmailContactPreview
+        :blok="props.blok"
+        :vars="{
+          name: 'John Doe',
+          email: 'john@a2m-orizon-solutionsocial.fr',
+          subject: 'Demande de devis',
+          message: 'Bonjour, je souhaite obtenir un devis pour vos services.'
+        }"
+    />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -69,6 +80,7 @@ import Navbar from './Navbar.vue'
 import Footer from './Footer.vue'
 import Link from './Link.vue'
 import Dropdown from './Dropdown.vue'
+import EmailContactPreview from './EmailContactPreview.vue'
 
 export type ContentProps = {
   blok: Content

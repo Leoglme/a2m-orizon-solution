@@ -125,7 +125,7 @@ const docs = {
 
 /** Coordonnées support */
 const support = {
-  email: 'contact@dibodev.fr',
+  email: 'contact@a2m-orizon-solutionsocial.fr',
   phone: '06 42 19 38 12',
   phoneLink: '+33642193812',
 }

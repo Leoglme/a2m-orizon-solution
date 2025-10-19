@@ -17,6 +17,10 @@ export default defineNuxtConfig({
             ],
         },
     },
+    runtimeConfig: {
+        mailjetApiKey: process.env.MAILJET_API_KEY || '',
+        mailjetApiSecret: process.env.MAILJET_API_SECRET || '',
+    },
     compatibilityDate: '2025-07-15',
     devtools: {enabled: true},
     modules: [
@@ -46,15 +50,11 @@ export default defineNuxtConfig({
     hooks: {
         'prerender:routes': async (ctx) => {
             try {
-                const storyblokToken: string | undefined = process.env.STORYBLOK_DELIVERY_API_TOKEN
-                if (!storyblokToken) {
-                    throw new Error('STORYBLOK_DELIVERY_API_TOKEN is not defined in environment variables')
-                }
-                const linksResponse: LinksResponse = await StoryblokService.getLinks(storyblokToken)
+                const linksResponse: LinksResponse = await StoryblokService.getLinks()
                 const routes: string[] = Object.values(linksResponse.links)
                     .map((link) => link.real_path || link.slug)
                     .filter((route): route is string => !!route)
-                console.log(`Prerender routes: ${JSON.stringify(routes, null, 2)}`)
+                // console.log(`Prerender routes: ${JSON.stringify(routes, null, 2)}`)
                 for (const route of routes) {
                     ctx.routes.add(route)
                 }
