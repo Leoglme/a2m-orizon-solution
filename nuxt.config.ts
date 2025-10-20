@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     app: {
         head: {
             title: 'A2M ÔRIZON SOLUTION - Assistance sociale Paris Île-de-France',
+            htmlAttrs: { lang: 'fr' },
             script: [
                 ...(process.env.NODE_ENV === 'production' ? [{
                     src: 'https://umami.a2m-orizon-solutionsocial.fr/script.js',

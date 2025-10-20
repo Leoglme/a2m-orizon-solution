@@ -15,14 +15,21 @@
 
 <script setup lang="ts">
 import type { PropType, ComputedRef } from 'vue'
-import { computed } from 'vue'
 import type { MapContent } from '~/content'
+import { computed } from 'vue'
 
-export type MapProps = { blok: MapContent }
+/* TYPES */
+export type MapProps = {
+  blok: MapContent
+}
+
+/* PROPS */
 const props: MapProps = defineProps({
   blok: { type: Object as PropType<MapContent>, required: true },
 })
 
+
+/* COMPUTED */
 /**
  * Without API key:
  * - Plan (roadmap): https://maps.google.com/maps?q=LAT,LNG&z=ZOOM&output=embed

@@ -1,10 +1,25 @@
-import type { SpaceResponse, LinksResponse, StoryResponse } from '~/services/types/storyblok';
+import type { SpaceResponse, LinksResponse, StoryResponse, StoriesResponse } from '~/services/types/storyblok';
+import type { BlogArticleContent } from '~/content'
+import { useRuntimeConfig } from '#imports'
+
 /**
  * Class for interacting with Storyblok API.
  * Provides static methods to fetch space details and links.
  */
 export class StoryblokService {
-    private static storyblokApiToken: string = process.env.STORYBLOK_DELIVERY_API_TOKEN || '';
+    private static _storyblokApiToken: string | undefined = process.env.STORYBLOK_DELIVERY_API_TOKEN;
+
+
+    /**
+     * Returns the API token from runtime config (publicly exposed for client-side usage)
+     */
+    private static get storyblokApiToken(): string {
+        if(this._storyblokApiToken) {
+            return this._storyblokApiToken
+        }
+        const config = useRuntimeConfig()
+        return config.public.storyblok.accessToken || ''
+    }
 
     /**
      * Fetches the space details from Storyblok API.
@@ -52,11 +67,14 @@ export class StoryblokService {
      * @returns {Promise<StoryResponse<TStory>>} Resolves to the story response.
      * @throws {Error} If the API request fails.
      */
-    // curl https://api.storyblok.com/v2/cdn/stories?token=cEVXQyEfdp8Qtf2xaaSd3Qtt&version=draft
     public static async getStoryBySlug<TStory>(
         slug: string,
         version: 'draft' | 'published' = 'published',
     ): Promise<StoryResponse<TStory>> {
+        console.log({
+            storyblokApiToken: this.storyblokApiToken,
+            env: process.env,
+        })
         let url: string
 
         if (version === 'published') {
@@ -74,5 +92,57 @@ export class StoryblokService {
 
         const data: StoryResponse<TStory> = await response.json()
         return data
+    }
+
+    /**
+     * Fetch a list of stories with optional parameters.
+     * Use it to list blog posts inside /blog folder with content_type 'blog_article'.
+     */
+    public static async getStories<TContent>(
+        params: Record<string, string | number> = {}
+    ): Promise<StoriesResponse<TContent> & { total: number; perPage: number; page: number }> {
+        const space: SpaceResponse = await this.getSpaceMe()
+        const cv: number = space.space.version
+
+        const search = new URLSearchParams({
+            token: this.storyblokApiToken,
+            version: 'published',
+            cv: String(cv),
+            ...Object.fromEntries(
+                Object.entries(params).map(([k, v]) => [k, String(v)])
+            ),
+        })
+
+        const url: string = `https://api.storyblok.com/v2/cdn/stories?${search.toString()}`
+        const response: Response = await fetch(url)
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch stories: ${response.status} ${response.statusText}`)
+        }
+
+        const data: StoriesResponse<TContent> = await response.json()
+        const totalHeader = response.headers.get('total')
+        const perPageHeader = response.headers.get('per-page')
+        const pageParam = Number(params.page ?? 1)
+
+        const total = totalHeader ? Number(totalHeader) : data.stories.length
+        const perPage = perPageHeader ? Number(perPageHeader) : Number(params.per_page ?? 25)
+
+        return Object.assign(data, { total, perPage, page: pageParam })
+    }
+
+    /**
+     * Convenience helper to list blog posts under /blog with pagination.
+     */
+    public static async getBlogPosts(
+        page: number = 1,
+        perPage: number = 9
+    ): Promise<StoriesResponse<BlogArticleContent> & { total: number; perPage: number; page: number }> {
+        return this.getStories<BlogArticleContent>({
+            content_type: 'blogArticle',
+            sort_by: 'first_published_at:desc',
+            page,
+            per_page: perPage,
+        })
     }
 }

@@ -1,7 +1,7 @@
 import type {ISbStoryData} from '@storyblok/js'
 import type {ContactFormPayload} from '~~/server/types/mail/contact'
 import type {LinkContent as TLinkContent} from '~/delivery-api'
-import type {StoryResponse} from '~/services/types/storyblok'
+import type {StoryResponse, StoryblokStory} from '~/services/types/storyblok'
 import Handlebars from 'handlebars'
 import {DateTime} from 'luxon'
 import {StoryblokService} from '~/services/storyblokService'
@@ -67,8 +67,10 @@ export class EmailContactTemplateService {
         slug: string,
         version: 'draft' | 'published' = process.env.NODE_ENV === 'production' ? 'published' : 'draft',
     ): Promise<EmailContactStory> {
-        const {story}: StoryResponse<EmailContactStory> =
+        const storyResponse: StoryResponse<EmailContactStory> =
             await StoryblokService.getStoryBySlug<EmailContactStory>(slug, version)
+
+        const story: EmailContactStory = storyResponse.story as unknown as EmailContactStory
 
         if (!story?.content || story.full_slug !== slug) {
             throw new Error(`Story "${slug}" is not an ${slug}`)

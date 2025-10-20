@@ -106,9 +106,9 @@ const buttonSizes: Record<A2MButtonSize, string> = {
 
 const computedClass: ComputedRef<string> = computed(
     () => `
-  rounded-lg inline-flex flex-col items-center gap-2.5 overflow-hidden text-center justify-center text-white font-semibold leading-tight bg-primary hover:bg-primary-light
+  rounded-lg inline-flex flex-col items-center gap-2.5 overflow-hidden text-center justify-center text-white font-semibold leading-tight bg-primary
   focus:outline-none focus:shadow-outline transition duration-150 ease-in-out select-none
-  ${props.disabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
+  ${props.disabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:bg-primary-light'}
   ${buttonSizes[props.size]}
 `,
 )

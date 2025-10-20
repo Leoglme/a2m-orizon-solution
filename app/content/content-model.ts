@@ -27,6 +27,8 @@ export type Content =
     | FooterMenuContent
     | FooterMenuItemContent
     | EmailContactTemplateContent
+    | BlogArticleContent
+    | BlogListContent
 
 export type BackgroundColor =
     | 'beige'
@@ -211,4 +213,22 @@ export type EmailContactTemplateContent = BlockContent<{
     footer?: string
     ctaLabel?: string
     ctaLink?: TLinkContent
+}>
+
+export type BlogArticleContent = BlockContent<{
+    component: 'blog_article'
+    title: string
+    description: string
+    category?: string
+    coverImage?: AssetContent
+    author?: string
+    body: RichTextContent
+}>
+
+export type BlogListContent = BlockContent<{
+    component: 'blog_list'
+    introBackgroundColor: BackgroundColor
+    intro?: RichTextContent
+    perPage?: number
+    showCategory?: boolean
 }>

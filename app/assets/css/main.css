@@ -101,6 +101,47 @@ input[type='number']::-webkit-inner-spin-button {
     .rich-text a {
         @apply text-blue-600 hover:text-blue-800 underline;
     }
+
+    /* SHOW PUCE AND NUMBER IN LISTS UL/OL */
+    .blog-article .rich-text ul {
+        @apply list-disc list-inside;
+    }
+
+    .blog-article .rich-text ol {
+        @apply list-decimal list-inside;
+    }
+
+    .blog-article li > p {
+        @apply inline;
+    }
+
+    .blog-article li:not(:last-child) {
+        @apply mb-10;
+    }
+
+    blockquote {
+        @apply p-4 my-10 border-s-4 border-gray-800 bg-gray-50;
+    }
+
+    blockquote p {
+        @apply sm:text-base! text-lg! italic font-medium leading-7 text-gray-900 inline;
+    }
+
+    blockquote::before,
+    blockquote::after {
+        font-family: serif;
+        @apply sm:text-base text-3xl! text-gray-900 leading-0 relative top-1.5;
+    }
+
+    blockquote::before {
+        content: "“";
+        margin-right: 0.5rem;
+    }
+
+    blockquote::after {
+        content: "”";
+        margin-left: 0.5rem;
+    }
 }
 
 
@@ -128,6 +169,10 @@ input[type='number']::-webkit-inner-spin-button {
 
         .rich-text h6 {
             @apply text-xl mt-4;
+        }
+
+        .blog-article .rich-text p {
+            @apply my-4;
         }
 
         .rich-text p {

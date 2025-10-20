@@ -61,8 +61,47 @@ export interface LinksResponse {
  * Interface for the Story response from Storyblok API.
  * @interface StoryResponse
  * @template TStory - The type of the story content.
- * @property {TStory} story - The story data.
+ * @property {StoryblokStory<TStory>} story - The story details.
  */
 export interface StoryResponse<TStory> {
-    story: TStory
+    story: StoryblokStory<TStory>
+}
+
+
+/**
+ * Type representing a Storyblok story with generic content type.
+ * @template T - The type of the story content.
+ * @property {string} name - The name of the story.
+ * @property {string} created_at - The creation date of the story.
+ * @property {string | null} published_at - The publication date of the story, or null if not published.
+ * @property {string | null} first_published_at - The first publication date of the story, or null if not published.
+ * @property {number} id - The ID of the story.
+ * @property {string} uuid - The UUID of the story.
+ * @property {string} slug - The slug of the story.
+ * @property {string} full_slug - The full slug of the story.
+ * @property {string} [path] - The path of the story (optional).
+ * @property {T} content - The content of the story.
+ */
+export type StoryblokStory<T> = {
+    name: string
+    created_at: string
+    published_at: string | null
+    first_published_at: string | null
+    id: number
+    uuid: string
+    slug: string
+    full_slug: string
+    path?: string
+    content: T
+}
+
+/**
+ * Type representing the Stories response from Storyblok API with generic content type.
+ * @template T - The type of the story content.
+ * @property {Array<StoryblokStory<T>>} stories - An array of Storyblok stories.
+ * @property {number} cv - The cache version number.
+ */
+export type StoriesResponse<T> = {
+    stories: Array<StoryblokStory<T>>
+    cv: number
 }
