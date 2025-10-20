@@ -21,8 +21,8 @@
       <ol class="hidden items-center justify-center gap-8 text-base font-normal lg:flex">
         <template v-for="(item, idx) in props.blok.items" :key="item._uid || idx">
           <!-- nav_link -->
-          <li v-if="item.component === 'link'">
-            <BlockLink
+          <li v-if="item.component === 'SbLink'">
+            <BlockSbLink
                 :blok="item"
                 className="w-full"
             />
@@ -67,9 +67,9 @@
             <section class="relative h-full w-full overflow-auto bg-white outline-none" @click.stop>
               <div class="flex flex-col gap-8 p-8">
                 <template v-for="(item, idx) in props.blok.items" :key="item._uid || 'm-'+idx">
-                  <!-- Link -->
-                  <BlockLink
-                      v-if="item.component === 'link'"
+                  <!-- SbLink -->
+                  <BlockSbLink
+                      v-if="item.component === 'SbLink'"
                       :blok="item"
                       className="w-full"
                       @click="mobileMenuOpen = false"
@@ -109,7 +109,7 @@ import NuxtLink from '#app/components/nuxt-link'
 import A2MLogo from '~/components/branding/A2MLogo.vue'
 import HamburgerIcon from '~/components/icons/HamburgerIcon.vue'
 import BlockButton from '~/storyblok/Button.vue'
-import BlockLink from '~/storyblok/Link.vue'
+import BlockSbLink from '~/storyblok/SbLink.vue'
 import BlockDropdwon from '~/storyblok/Dropdown.vue'
 
 

@@ -71,10 +71,6 @@ export class StoryblokService {
         slug: string,
         version: 'draft' | 'published' = 'published',
     ): Promise<StoryResponse<TStory>> {
-        console.log({
-            storyblokApiToken: this.storyblokApiToken,
-            env: process.env,
-        })
         let url: string
 
         if (version === 'published') {

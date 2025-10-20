@@ -116,7 +116,7 @@ input[type='number']::-webkit-inner-spin-button {
     }
 
     .blog-article li:not(:last-child) {
-        @apply mb-10;
+        @apply mb-8;
     }
 
     blockquote {
@@ -141,6 +141,12 @@ input[type='number']::-webkit-inner-spin-button {
     blockquote::after {
         content: "”";
         margin-left: 0.5rem;
+    }
+
+    .blog-article .a2m-link,
+    .rich-text .a2m-button
+    {
+        @apply no-underline;
     }
 }
 

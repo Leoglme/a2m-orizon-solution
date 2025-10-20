@@ -3,7 +3,7 @@
       v-if="isExternalLink"
       target="_blank"
       rel="noopener"
-      class="inline-flex cursor-pointer items-center gap-x-1.5 font-semibold decoration-2 underline-offset-4 hover:underline text-base"
+      class="a2m-link inline-flex cursor-pointer items-center gap-x-1.5 font-semibold decoration-2 underline-offset-4 hover:underline text-base"
       :href="href"
       :style="{ color: props.color }"
   >
@@ -12,7 +12,7 @@
   <nuxt-link
       v-else
       :to="props.link"
-      class="inline-flex cursor-pointer items-center gap-x-1.5 font-semibold decoration-2 underline-offset-4 hover:underline text-base"
+      class="a2m-link inline-flex cursor-pointer items-center gap-x-1.5 font-semibold decoration-2 underline-offset-4 hover:underline text-base"
       :style="{ color: props.color }"
   >
     <slot />

@@ -162,7 +162,7 @@ export type ContactSectionContent = BlockContent<{
 }>
 
 export type LinkContent = BlockContent<{
-    component: 'link'
+    component: 'SbLink'
     label: string
     link: TLinkContent
     activeColor?: string

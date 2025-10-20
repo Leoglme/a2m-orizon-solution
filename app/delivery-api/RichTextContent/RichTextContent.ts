@@ -4,18 +4,21 @@ import type { Mark } from './Mark'
 /**
  * Rich text content consists of ProseMirror nodes
  */
-export type RichTextContent =
-    | DocNode
-    | ParagraphNode
-    | TextNode
-    | HorizontalRuleNode
-    | BlockQuoteNode
-    | BulletListNode
-    | OrderedListNode
-    | HeadingNode
-    | BlockNode
-    | CodeBlockNode
-    | ImageNode
+export interface RichTextContent {
+    type: 'doc'
+    content: Array<
+        | ParagraphNode
+        | TextNode
+        | HorizontalRuleNode
+        | BlockQuoteNode
+        | BulletListNode
+        | OrderedListNode
+        | HeadingNode
+        | BlockNode
+        | CodeBlockNode
+        | ImageNode
+    >
+}
 
 /*
  * Nodes

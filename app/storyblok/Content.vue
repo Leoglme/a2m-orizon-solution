@@ -39,8 +39,8 @@
   <slot v-if="props.blok.component === 'navbar'">
     <Navbar :blok="props.blok" />
   </slot>
-  <slot v-if="props.blok.component === 'link'">
-    <Link :blok="props.blok" />
+  <slot v-if="props.blok.component === 'SbLink'">
+    <SbLink :blok="props.blok" />
   </slot>
   <slot v-if="props.blok.component === 'dropdown'">
     <Dropdown :blok="props.blok" />
@@ -85,7 +85,7 @@ import Map from './Map.vue'
 import ContactSection from './ContactSection.vue'
 import Navbar from './Navbar.vue'
 import Footer from './Footer.vue'
-import Link from './Link.vue'
+import SbLink from './SbLink.vue'
 import Dropdown from './Dropdown.vue'
 import EmailContactPreview from './EmailContactPreview.vue'
 import BlogList from './BlogList.vue'
