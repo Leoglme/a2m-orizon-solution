@@ -1,31 +1,42 @@
 <template>
-  <A2MButton
+  <div
       v-if="props.blok"
-      :to="to"
-      :size="props.blok.size"
-      :backgroundColor="backgroundColor"
-      :backgroundHoverColor="backgroundHoverColor"
-      :disabled="false"
-  >
-    {{ props.blok.text }}
-    <slot />
-  </A2MButton>
+      :class="className"
+      ref="buttonRef">
+    <A2MButton
+        :class="className"
+        :to="to"
+        :size="props.blok.size"
+        :backgroundColor="backgroundColor"
+        :backgroundHoverColor="backgroundHoverColor"
+        :disabled="false"
+    >
+      {{ props.blok.text }}
+      <slot />
+    </A2MButton>
+  </div>
 </template>
 
 <script setup lang="ts">
-import type { PropType, ComputedRef } from 'vue'
-import type { ButtonContent } from '~/content'
+import type { PropType, ComputedRef, Ref } from 'vue'
+import type {AnimationSettingsContent, ButtonContent} from '~/content'
 import type { LinkContent } from "~/delivery-api";
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import A2MButton from '~/components/core/A2MButton.vue'
+import { GsapService } from '~/services/gsapService'
 
-export type ButtonProps = { blok: ButtonContent }
+export type ButtonProps = {
+  blok: ButtonContent
+  className?: string
+}
 const props: ButtonProps = defineProps({
   blok: { type: Object as PropType<ButtonContent>, required: true },
+  className: { type: String as PropType<string>, default: null },
 })
 
-const link: ComputedRef<LinkContent | undefined> = computed(() => props.blok?.link)
+const buttonRef: Ref<HTMLElement | null> = ref(null)
 
+const link: ComputedRef<LinkContent | undefined> = computed(() => props.blok?.link)
 const isAnchorLink: ComputedRef<boolean> = computed(() => {
   if (!link.value || link.value.linktype !== 'url') return false
   return link.value.url.startsWith('#') && link.value.url.length > 1
@@ -69,6 +80,15 @@ const backgroundHoverColor: ComputedRef<string> = computed(() => {
     case 'primary':
     default:
       return '#045DC3'
+  }
+})
+
+
+onMounted(() => {
+  const btnAnimBlk: AnimationSettingsContent | undefined = props.blok.animation?.[0]
+
+  if (buttonRef.value && btnAnimBlk && btnAnimBlk.enabled) {
+    GsapService.animate(buttonRef.value, btnAnimBlk)
   }
 })
 </script>

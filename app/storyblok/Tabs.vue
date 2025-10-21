@@ -4,7 +4,7 @@
       v-editable="props.blok">
     <div
         class="flex-1 flex flex-col justify-start items-center gap-16 sm:gap-14 max-w-7xl">
-      <div class="self-stretch flex flex-col justify-start items-center gap-2">
+      <div ref="descriptionRef" class="self-stretch flex flex-col justify-start items-center gap-2">
         <RichTextView :doc="props.blok.description" :blok="props.blok" />
       </div>
       <div class="self-stretch flex flex-col items-stretch gap-4 md:gap-5">
@@ -31,6 +31,7 @@
         <slot
             v-for="content in currentTab?.content">
           <div
+              ref="contentPanelRef"
               class="rounded-xl md:rounded-3xl overflow-hidden flex-col items-stretch gap-2">
             <Content :blok="content" />
           </div>
@@ -42,10 +43,11 @@
 
 <script setup lang="ts">
 import type { Ref, PropType, ComputedRef } from 'vue'
-import type { TabsContent, TabContent } from '~/content'
-import { ref, computed } from 'vue'
+import type {TabsContent, TabContent, AnimationSettingsContent} from '~/content'
+import { ref, computed, onMounted } from 'vue'
 import Content from './Content.vue'
 import RichTextView from '~/components/RichText.vue'
+import {GsapService} from "~/services/gsapService";
 
 export type TabsProps = {
   blok: TabsContent
@@ -60,5 +62,24 @@ const props: TabsProps = defineProps({
 const currentTabUid: Ref<string | undefined, string | undefined> = ref(props.blok.tabs[0]?._uid)
 const currentTab: ComputedRef<TabContent | undefined> = computed(() => {
   return props.blok.tabs.find((tab: TabContent) => tab._uid === currentTabUid.value)
+})
+
+
+/* -------- Refs pour GSAP -------- */
+const descriptionRef: Ref<HTMLElement | null> = ref(null)
+const contentPanelRef: Ref<HTMLElement | null> = ref(null)
+
+
+onMounted(() => {
+  const descriptionAnimBlk: AnimationSettingsContent | undefined = props.blok.descriptionAnimation?.[0]
+
+  if (descriptionRef.value && descriptionAnimBlk && descriptionAnimBlk.enabled) {
+    GsapService.animate(descriptionRef.value, descriptionAnimBlk) // ex: type 'slide-up'
+  }
+
+  const contentPanelAnimBlk: AnimationSettingsContent | undefined = props.blok.contentPanelAnimation?.[0]
+  if (contentPanelRef.value && contentPanelAnimBlk && contentPanelAnimBlk.enabled) {
+    GsapService.animate(contentPanelRef.value, contentPanelAnimBlk) // ex: type 'slide-up'
+  }
 })
 </script>

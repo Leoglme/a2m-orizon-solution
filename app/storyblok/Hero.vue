@@ -17,16 +17,20 @@
           flex-1 p-0 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center
           ${layoutPosition(props.blok)} ${props.blok.layoutPosition === 'center' ? 'lg:pt-20!': undefined}`"
       >
-        <RichTextView
-            :doc="props.blok.description"
-            :blok="props.blok"
-        />
+
+        <div ref="textRef">
+          <RichTextView
+              :doc="props.blok.description"
+              :blok="props.blok"
+          />
+        </div>
+
         <div
             v-if="props.blok.buttons && props.blok.buttons.length > 0"
             class="flex gap-2 md:gap-4 flex-wrap items-center mt-4 w-full sm:w-auto">
           <slot
               v-for="button in props.blok.buttons">
-              <Button class="w-full sm:w-auto" :blok="button"/>
+              <Button className="w-full sm:w-auto" :blok="button" />
           </slot>
         </div>
       </div>
@@ -39,6 +43,7 @@
           } `"
         >
           <img
+              ref="imgRef"
               :src="props.blok.image?.filename"
               :alt="props.blok.image?.alt ?? ''"
               :width="1200"
@@ -52,9 +57,11 @@
 </template>
 
 <script setup lang="ts">
-import type {PropType} from 'vue'
-import type {HeroContent} from '~/content'
+import type {PropType, Ref} from 'vue'
+import type {HeroContent, AnimationSettingsContent} from '~/content'
+import { ref, onMounted } from 'vue'
 import RichTextView from '~/components/RichText.vue'
+import { GsapService } from '~/services/gsapService'
 import Button from './Button.vue'
 import {backgroundColor} from './backgroundColorClass'
 
@@ -64,11 +71,11 @@ const rootAlignment = (content: HeroContent): string => {
   }
   switch (content.layoutPosition) {
     case 'left':
-      return 'flex flex-col md:flex-row'
+      return 'flex flex-col lg:flex-row'
     case 'right':
-      return 'flex flex-col md:flex-row-reverse'
+      return 'flex flex-col lg:flex-row-reverse'
     case 'center':
-      return 'flex flex-col md:flex-col'
+      return 'flex flex-col lg:flex-col'
   }
 }
 const layoutPosition = (content: HeroContent): string => {
@@ -93,5 +100,28 @@ const props: HeroProps = defineProps({
     type: Object as PropType<HeroContent>,
     required: true,
   },
+})
+
+/* -------- Refs pour GSAP -------- */
+const textRef: Ref<HTMLElement | null> = ref(null)
+const imgRef: Ref<HTMLElement | null> = ref(null)
+
+onMounted(() => {
+  const textAnimBlk: AnimationSettingsContent | undefined = props.blok.textAnimation?.[0]
+
+  if (textRef.value && textAnimBlk && textAnimBlk.enabled) {
+    GsapService.animate(textRef.value, textAnimBlk) // ex: type 'slide-up'
+  }
+
+  const imgAnimBlk: AnimationSettingsContent | undefined = props.blok.imageAnimation?.[0]
+
+  if (imgRef.value && imgAnimBlk && imgAnimBlk.enabled) {
+    // if anim type is slide-left or slide-right, inferior screen width 1024px, change to slide-up
+    if ((imgAnimBlk.type === 'slide-left' || imgAnimBlk.type === 'slide-right') && window.innerWidth < 1024) {
+      imgAnimBlk.type = 'slide-up'
+    }
+
+    GsapService.animate(imgRef.value, imgAnimBlk)
+  }
 })
 </script>

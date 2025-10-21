@@ -4,6 +4,7 @@ import type {
     AssetContent,
     RichTextContent,
 } from '~/delivery-api'
+import type { GsapAnimationType, GsapEase } from '~/services/types/gsap'
 
 export type Content =
     | HeroContent
@@ -42,6 +43,18 @@ export type BackgroundColor =
     | 'pink'
     | 'blue'
 
+
+export type AnimationSettingsContent = BlockContent<{
+    component: 'AnimationSettings'
+    enabled: boolean
+    type: GsapAnimationType
+    duration?: number
+    delay?: number
+    easing?: GsapEase
+    stagger?: number
+    parallaxIntensity?: number
+}>
+
 export type HeroContent = BlockContent<{
     component: 'hero'
     image?: AssetContent
@@ -51,6 +64,8 @@ export type HeroContent = BlockContent<{
     description: RichTextContent
     backgroundColor: BackgroundColor
     buttons: ButtonContent[]
+    textAnimation?: AnimationSettingsContent[]
+    imageAnimation?: AnimationSettingsContent[]
 }>
 
 export type ButtonContent = BlockContent<{
@@ -59,6 +74,7 @@ export type ButtonContent = BlockContent<{
     link?: TLinkContent
     color: 'primary' | 'secondary'
     size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+    animation?: AnimationSettingsContent[]
 }>
 
 export type PageContent = BlockContent<{
@@ -72,6 +88,7 @@ export type CardContent = BlockContent<{
     icon?: AssetContent
     button?: ButtonContent[]
     link?: TLinkContent
+    animation?: AnimationSettingsContent[]
 }>
 
 export type CardsContent = BlockContent<{
@@ -81,6 +98,7 @@ export type CardsContent = BlockContent<{
     cards: CardContent[]
     button?: ButtonContent[]
     backgroundColor: BackgroundColor
+    descriptionAnimation?: AnimationSettingsContent[]
 }>
 
 export type TabContent = BlockContent<{
@@ -92,6 +110,8 @@ export type TabContent = BlockContent<{
 export type TabsContent = BlockContent<{
     component: 'tabs'
     description: RichTextContent
+    descriptionAnimation?: AnimationSettingsContent[]
+    contentPanelAnimation?: AnimationSettingsContent[]
     tabs: TabContent[]
 }>
 
@@ -110,6 +130,7 @@ export type FaqContent = BlockContent<{
     items: FaqItemContent[]
     backgroundColor: BackgroundColor
     allowMultipleOpen?: boolean
+    titleAnimation?: AnimationSettingsContent[]
 }>
 
 
@@ -142,6 +163,9 @@ export type MapSectionContent = BlockContent<{
     button: ButtonContent[]
     map: MapContent[]
     backgroundColor: BackgroundColor
+    titleAnimation?: AnimationSettingsContent[]
+    contentAnimation?: AnimationSettingsContent[]
+    mapAnimation?: AnimationSettingsContent[]
 }>
 
 export type PillOptionContent = BlockContent<{
@@ -159,6 +183,7 @@ export type ContactSectionContent = BlockContent<{
     subjects: PillOptionContent[]
     placeholders?: string
     backgroundColor: BackgroundColor
+    titleAnimation?: AnimationSettingsContent[]
 }>
 
 export type LinkContent = BlockContent<{

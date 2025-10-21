@@ -7,7 +7,11 @@
     <div class="max-w-6xl flex flex-col gap-10">
       <div
           class="lg:self-stretch flex-1 inline-flex lg:justify-center items-start flex-col lg:flex-row gap-10 md:gap-2">
-        <RichTextView :doc="props.blok.description" :blok="props.blok" />
+        <div
+          ref="descriptionRef"
+        >
+          <RichTextView :doc="props.blok.description" :blok="props.blok" />
+        </div>
         <slot
             v-if="props.blok.button"
             v-for="button in props.blok.button"
@@ -16,7 +20,7 @@
         </slot>
       </div>
       <div
-          class="self-stretch grid justify-start items-stretch gap-6 flex-col md:grid-cols-3">
+          class="self-stretch grid justify-start items-stretch gap-6 flex-col md:grid-cols-2 lg:grid-cols-3">
         <slot
             v-for="card in blok.cards"
         >
@@ -28,12 +32,14 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
+import type {AnimationSettingsContent, CardsContent} from '~/content'
 import RichTextView from '~/components/RichText.vue'
-import type { CardsContent } from '~/content'
 import Card from './Card.vue'
 import BlockButton from "~/storyblok/Button.vue";
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
+import {ref, onMounted} from "vue";
+import {GsapService} from "~/services/gsapService";
 
 export type CardsProps = {
   blok: CardsContent
@@ -45,4 +51,15 @@ const props: CardsProps = defineProps({
     required: true,
   },
 })
+
+/* -------- Refs pour GSAP -------- */
+const descriptionRef: Ref<HTMLElement | null> = ref(null);
+
+onMounted(() => {
+  const descriptionAnimBlk: AnimationSettingsContent | undefined = props.blok.descriptionAnimation?.[0]
+
+  if (descriptionRef.value && descriptionAnimBlk && descriptionAnimBlk.enabled) {
+    GsapService.animate(descriptionRef.value, descriptionAnimBlk) // ex: type 'slide-up'
+  }
+});
 </script>

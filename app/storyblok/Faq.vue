@@ -4,7 +4,7 @@
       :class="sectionClasses"
       v-editable="props.blok">
     <div class="w-full max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8">
-      <div class="flex flex-col items-start gap-2">
+      <div ref="titleRef" class="flex flex-col items-start gap-2">
         <div class="flex items-center justify-center w-full gap-3 sm:gap-8">
           <svg
               width="50"
@@ -48,11 +48,12 @@
 
 <script setup lang="ts">
 import type {PropType, Ref} from 'vue'
-import {ref} from 'vue'
-import type {FaqContent} from '~/content'
+import {ref, onMounted } from 'vue'
+import type {AnimationSettingsContent, FaqContent} from '~/content'
 import RichTextView from '~/components/RichText.vue'
 import FaqItem from './FaqItem.vue'
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
+import {GsapService} from "~/services/gsapService";
 
 export type FaqProps = {
   blok: FaqContent
@@ -86,4 +87,16 @@ const onToggle = (uid: string) => {
 const sectionClasses = `${backgroundColor(
     props.blok.backgroundColor,
 )}`
+
+
+/* -------- Refs pour GSAP -------- */
+const titleRef: Ref<HTMLElement | null> = ref(null)
+
+onMounted(() => {
+  const titleAnimBlk: AnimationSettingsContent | undefined = props.blok.titleAnimation?.[0]
+
+  if (titleRef.value && titleAnimBlk && titleAnimBlk.enabled) {
+    GsapService.animate(titleRef.value, titleAnimBlk) // ex: type 'slide-up'
+  }
+})
 </script>
