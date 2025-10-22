@@ -72,7 +72,7 @@ import type {PropType, Ref, ComputedRef} from 'vue'
 import type {BlogListContent, BlogArticleContent} from '~/content'
 import type {StoriesResponse, StoryblokStory} from '~/services/types/storyblok'
 import type { RouteLocationNormalizedLoadedGeneric, LocationQueryValue } from "#vue-router";
-import { useRoute } from 'nuxt/app';
+import {useRoute} from "#imports";
 import {ref, computed} from 'vue'
 import {StoryblokService} from '~/services/storyblokService'
 import BlogPostCard from '~/components/blog/BlogPostCard.vue'
