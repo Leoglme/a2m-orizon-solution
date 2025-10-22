@@ -22,9 +22,14 @@ export class StoryblokService {
     private static get storyblokApiToken(): string {
         if (this._storyblokApiToken) {
             return this._storyblokApiToken
+        } else {
+            if(import.meta.client) {
+                const config = useRuntimeConfig()
+                return config.public.storyblok.accessToken || ''
+            } else {
+                throw new Error('Storyblok API token is not defined in environment variables or runtime config.')
+            }
         }
-        const config = useRuntimeConfig()
-        return config.public.storyblok.accessToken || ''
     }
 
     /**
