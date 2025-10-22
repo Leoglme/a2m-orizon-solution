@@ -74,23 +74,11 @@ import type {StoriesResponse, StoryblokStory} from '~/services/types/storyblok'
 import type { RouteLocationNormalizedLoadedGeneric, LocationQueryValue } from "#vue-router";
 import { useRoute } from 'nuxt/app';
 import {ref, computed} from 'vue'
-import { useSeoMeta } from '#imports'
 import {StoryblokService} from '~/services/storyblokService'
 import BlogPostCard from '~/components/blog/BlogPostCard.vue'
 import RichTextView from '~/components/RichText.vue'
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
 import A2MButton from "~/components/core/A2MButton.vue";
-
-/* SEO */
-useSeoMeta({
-  title: 'Nos derniers articles - Blog A2M ÔRIZON SOLUTION',
-  description: 'Découvrez les derniers articles de notre blog sur le travail social, les innovations et les meilleures pratiques. Restez informé avec A2M ÔRIZON SOLUTION.',
-  ogTitle: 'Nos derniers articles - Blog A2M ÔRIZON SOLUTION',
-  ogDescription: 'A2M ÔRIZON SOLUTION - Découvrez les derniers articles de notre blog sur le travail social, les innovations et les meilleures pratiques.',
-  ogImage: 'https://a2m-orizon-solutionsocial.fr/A2M-ÔRIZON-SOLUTION-LOGO.png',
-  twitterCard: 'summary_large_image',
-})
-
 
 /* TYPES */
 export type BlogListProps = { blok: BlogListContent }

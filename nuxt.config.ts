@@ -1,12 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { StoryblokLinkSiteMapEntry } from './app/services/types/storyblok';
 import mkcert from "vite-plugin-mkcert";
 import tailwindcss from '@tailwindcss/vite'
+import meta from './meta'
+import {StoryblokService} from "./app/services/storyblokService";
 
 export default defineNuxtConfig({
     app: {
         head: {
-            title: 'A2M ÔRIZON SOLUTION - Assistance sociale Paris Île-de-France',
+            title: meta.title,
             htmlAttrs: { lang: 'fr' },
+            link: [
+                { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+                { rel: 'manifest', href: '/site.webmanifest' },
+                { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+            ],
+            meta: [
+                { name: 'theme-color', content: '#004AAD' },
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            ],
             script: [
                 ...(process.env.NODE_ENV === 'production' ? [{
                     src: 'https://umami.a2m-orizon-solutionsocial.fr/script.js',
@@ -22,20 +35,52 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2025-07-15',
     devtools: {enabled: true},
-    modules: [
-        [
-            '@storyblok/nuxt',
-            {
-                accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
-                apiOptions: {
-                    region: 'eu',
-                },
-                usePlugin: true,
+    modules: [[
+        '@storyblok/nuxt',
+        {
+            accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
+            apiOptions: {
+                region: 'eu',
             },
-        ],
-    ],
+            usePlugin: true,
+        },
+    ], '@nuxtjs/seo'],
     devServer: {
         https: true,
+    },
+    ssr: true,
+    site: {
+        url: meta.url,
+        name: meta.name,
+        description: meta.description,
+        defaultLocale: 'fr',
+    },
+    ogImage: { enabled: false },
+    sitemap: {
+        enabled: true,
+        exclude: ['/admin', '/404', '/emails/*'],
+        autoLastmod: true,
+        discoverImages: true,
+        urls: async () => {
+            const storyblokSitemap: StoryblokLinkSiteMapEntry[] = await StoryblokService.getSitemapEntries()
+
+            return storyblokSitemap
+        },
+    },
+    schemaOrg: {
+        identity: {
+            type: 'Organization',
+            name: meta.name,
+            url: meta.url,
+            logo: `${meta.url}/android-chrome-512x512.png`
+        },
+    },
+    linkChecker: { enabled: true },
+    seo: { enabled: true },
+    robots: {
+        enabled: true,
+        disallow: ['/admin', '/404', '/emails/*'],
+        sitemap: `${meta.url}/sitemap.xml`,
     },
     plugins: ['~/plugins/VeeValidate'],
     css: ['~/assets/css/main.css'],

@@ -1,3 +1,4 @@
+import type {ISbStoryData} from '@storyblok/js'
 /**
  * Interface for the Space response from Storyblok API.
  * @interface SpaceResponse
@@ -73,6 +74,7 @@ export interface StoryResponse<TStory> {
  * @template T - The type of the story content.
  * @property {string} name - The name of the story.
  * @property {string} created_at - The creation date of the story.
+ * @property {string} [updated_at] - The last updated date of the story (optional).
  * @property {string | null} published_at - The publication date of the story, or null if not published.
  * @property {string | null} first_published_at - The first publication date of the story, or null if not published.
  * @property {number} id - The ID of the story.
@@ -85,6 +87,7 @@ export interface StoryResponse<TStory> {
 export type StoryblokStory<T> = {
     name: string
     created_at: string
+    updated_at?: string
     published_at: string | null
     first_published_at: string | null
     id: number
@@ -104,4 +107,20 @@ export type StoryblokStory<T> = {
 export type StoriesResponse<T> = {
     stories: Array<StoryblokStory<T>>
     cv: number
+}
+
+/**
+ * Type representing a Storyblok link entry for sitemap generation.
+ * @property {string} loc - The location URL of the sitemap entry.
+ * @property {string} [lastmod] - The last modification date of the sitemap entry (optional).
+ */
+export type StoryblokLinkSiteMapEntry = {
+    loc: string;
+    lastmod?: string;
+}
+
+/** Story typed with our blok. */
+export type PageStory = Omit<ISbStoryData, 'content'> & {
+    seo_title?: string;
+    seo_description?: string;
 }

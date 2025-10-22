@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import Content from '~/storyblok/Content.vue'
 import type { PageContent } from '~/content'
+import Content from '~/storyblok/Content.vue'
 
 export type PageProps = {
   blok: PageContent

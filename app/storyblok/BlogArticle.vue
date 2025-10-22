@@ -77,8 +77,17 @@ const props: BlogArticleProps = defineProps({
 /* STATE */
 const route = useRoute()
 const publishedAtISO: Ref<string> = ref('')
+const lastModified: Ref<string> = ref('')
 
 /* SEO */
+useHead({
+  meta: [
+    { property: 'og:type', content: 'article' },
+    { property: 'article:published_time', content: publishedAtISO.value },
+    { property: 'article:modified_time', content: lastModified.value }
+  ]
+})
+
 useSeoMeta({
   title: `${props.blok.title} — A2M ÔRIZON SOLUTION`,
   description: props.blok.description || '',
@@ -111,5 +120,6 @@ onMounted(async () => {
   const slug: string = String(route.fullPath).replace(/^\//, '')
   const res: StoryResponse<BlogArticleContent> = await StoryblokService.getStoryBySlug<BlogArticleContent>(slug, 'published')
   publishedAtISO.value = res.story.first_published_at || res.story.published_at || res.story.created_at
+  lastModified.value = res.story.updated_at || res.story.published_at || res.story.created_at
 })
 </script>

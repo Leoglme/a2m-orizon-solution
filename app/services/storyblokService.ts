@@ -1,6 +1,12 @@
-import type { SpaceResponse, LinksResponse, StoryResponse, StoriesResponse } from '~/services/types/storyblok';
-import type { BlogArticleContent } from '~/content'
-import { useRuntimeConfig } from '#imports'
+import type {
+    SpaceResponse,
+    LinksResponse,
+    StoryResponse,
+    StoriesResponse,
+    StoryblokLinkSiteMapEntry,
+    StoryblokLink
+} from '~/services/types/storyblok';
+import type {BlogArticleContent} from '~/content'
 
 /**
  * Class for interacting with Storyblok API.
@@ -14,7 +20,7 @@ export class StoryblokService {
      * Returns the API token from runtime config (publicly exposed for client-side usage)
      */
     private static get storyblokApiToken(): string {
-        if(this._storyblokApiToken) {
+        if (this._storyblokApiToken) {
             return this._storyblokApiToken
         }
         const config = useRuntimeConfig()
@@ -124,7 +130,7 @@ export class StoryblokService {
         const total = totalHeader ? Number(totalHeader) : data.stories.length
         const perPage = perPageHeader ? Number(perPageHeader) : Number(params.per_page ?? 25)
 
-        return Object.assign(data, { total, perPage, page: pageParam })
+        return Object.assign(data, {total, perPage, page: pageParam})
     }
 
     /**
@@ -140,5 +146,35 @@ export class StoryblokService {
             page,
             per_page: perPage,
         })
+    }
+
+    /**
+     * Fetches sitemap entries from Storyblok links.
+     * @static
+     * @returns {Promise<StoryblokLinkSiteMapEntry[]>} A promise that resolves to an array of sitemap entries.
+     * @throws {Error} If the API request fails.
+     */
+    public static async getSitemapEntries(): Promise<StoryblokLinkSiteMapEntry[]> {
+        const storyblokLinks: LinksResponse = await this.getLinks();
+        const sitemapEntries: StoryblokLinkSiteMapEntry[] = []
+
+        Object.values(storyblokLinks.links).forEach((link) => {
+            const path: string | null = link.real_path || link.path;
+
+            // exclude folders, non-published links, emails, and admin paths
+            if (
+                link.is_folder || !link.published || link.slug.startsWith('emails/') || link.slug.startsWith('admin') ||
+                !path
+            ) {
+                return;
+            }
+
+            sitemapEntries.push({
+                loc: path,
+                lastmod: new Date().toISOString().split('T')[0],
+            })
+        })
+
+        return sitemapEntries;
     }
 }

@@ -79,6 +79,8 @@ export type ButtonContent = BlockContent<{
 
 export type PageContent = BlockContent<{
     component: 'page'
+    seo_title?: string
+    seo_description?: string
     body: Content[]
 }>
 
@@ -256,4 +258,6 @@ export type BlogListContent = BlockContent<{
     intro?: RichTextContent
     perPage?: number
     showCategory?: boolean
+    seo_title?: string
+    seo_description?: string
 }>
