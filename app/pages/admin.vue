@@ -257,7 +257,7 @@ const videos: ReadonlyArray<Video> = [
   {
     id: 'storyblokContent',
     title: 'Modifier et gérer le contenu du site',
-    url: 'https://youtu.be/VIDEO_ID_2',
+    url: 'https://www.youtube.com/watch?v=jhdk7Noi_bY',
     description: 'Comment changer un texte ou une image, puis publier.',
   },
   {
