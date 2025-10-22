@@ -81,7 +81,6 @@ const storyPath: ComputedRef<string> = computed((): string => {
 
 const pageStory: StoryResponse<PageStory> = await StoryblokService.getStoryBySlug<PageStory>(storyPath.value, isStoryblokEditor ? 'draft' : 'published');
 
-
 const pageTitle: ComputedRef<string> = computed(() => {
   return pageStory.story.content.seo_title || pageStory.story.name || meta.title;
 });

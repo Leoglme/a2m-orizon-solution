@@ -117,6 +117,11 @@ export type StoriesResponse<T> = {
 export type StoryblokLinkSiteMapEntry = {
     loc: string;
     lastmod?: string;
+    images: Array<{
+        loc: string
+        title: string
+        caption?: string
+    }>
 }
 
 /** Story typed with our blok. */

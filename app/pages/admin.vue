@@ -119,7 +119,7 @@ const links = {
 }
 
 const docs = {
-  storyblok: 'https://www.storyblok.com/docs/guide/introduction',
+  storyblok: 'https://www.storyblok.com/docs/manuals/visual-editor',
   umami: 'https://umami.is/docs/filter',
 }
 

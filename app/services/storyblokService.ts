@@ -4,9 +4,12 @@ import type {
     StoryResponse,
     StoriesResponse,
     StoryblokLinkSiteMapEntry,
-    StoryblokLink
+    StoryblokStory
 } from '~/services/types/storyblok';
-import type {BlogArticleContent} from '~/content'
+import type {BlogArticleContent, Content} from '~/content'
+import type {AssetContent} from "~/delivery-api";
+import {StoryblokAssetService} from "./storyblokAssetService";
+import meta from "../../meta";
 
 /**
  * Class for interacting with Storyblok API.
@@ -35,12 +38,6 @@ export class StoryblokService {
             }
 
             if (!token) {
-                console.log({
-                    client: import.meta.client,
-                    configPublicStoryblok: config.public.storyblok,  // Pour debug
-                    configStoryblokDelivery: config.storyblokDeliveryApiToken,  // Pour debug
-                    env: process.env  // Pour debug
-                });
                 throw new Error('Storyblok API token is not defined in runtime config.');
             }
 
@@ -180,6 +177,14 @@ export class StoryblokService {
         const storyblokLinks: LinksResponse = await this.getLinks();
         const sitemapEntries: StoryblokLinkSiteMapEntry[] = []
 
+        const stories = await this.getStories<any>({
+            per_page: 100     // Tous les articles
+        })
+
+        const storyBySlug = new Map(
+            stories.stories.map(s => [s.full_slug, s])
+        )
+
         Object.values(storyblokLinks.links).forEach((link) => {
             const path: string | null = link.real_path || link.path;
 
@@ -191,9 +196,22 @@ export class StoryblokService {
                 return;
             }
 
+            const fullStory: StoryblokStory<Content> | undefined
+                = storyBySlug.get(link.slug) as StoryblokStory<Content> | undefined
+            const images: AssetContent[] = fullStory ? StoryblokAssetService.extractImagesFromStory(fullStory) : []
+
+            const storyDate: string | undefined = fullStory?.first_published_at || fullStory?.published_at || fullStory?.created_at || fullStory?.updated_at
+
             sitemapEntries.push({
-                loc: path,
-                lastmod: new Date().toISOString().split('T')[0],
+                loc: `${meta.url}${path}`,
+                lastmod: storyDate
+                    ? new Date(storyDate).toISOString().split('T')[0]
+                    : new Date().toISOString().split('T')[0],
+                images: images.map(img => ({
+                    loc: img.filename || img.src || '',
+                    title: img.alt || img.name || img.title || 'Image',
+                    caption: img.alt
+                })).filter(img => img.loc)
             })
         })
 

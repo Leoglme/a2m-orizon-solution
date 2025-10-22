@@ -6,4 +6,6 @@ export type AssetContent = {
     alt?: string
     copyright?: string
     focus?: string
+    src?: string
+    name?: string
 }
