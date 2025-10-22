@@ -251,7 +251,7 @@ const videos: ReadonlyArray<Video> = [
   {
     id: 'storyblokLogin',
     title: 'Se connecter et accéder à l’espace d’administration',
-    url: 'https://youtu.be/VIDEO_ID_1',
+    url: 'https://youtu.be/EWwYcIKQ5iU',
     description: 'Où cliquer pour ouvrir l’éditeur et se connecter.',
   },
   {
