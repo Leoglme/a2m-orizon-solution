@@ -13,7 +13,7 @@ import type {BlogArticleContent} from '~/content'
  * Provides static methods to fetch space details and links.
  */
 export class StoryblokService {
-    private static _storyblokApiToken: string | undefined = process.env.STORYBLOK_DELIVERY_API_TOKEN;
+    private static _storyblokApiToken: string | undefined = process.env.NUXT_STORYBLOK_DELIVERY_API_TOKEN;
 
 
     /**
@@ -21,14 +21,31 @@ export class StoryblokService {
      */
     private static get storyblokApiToken(): string {
         if (this._storyblokApiToken) {
-            return this._storyblokApiToken
+            return this._storyblokApiToken;
         } else {
-            if(import.meta.client) {
-                const config = useRuntimeConfig()
-                return config.public.storyblok.accessToken || ''
+            const config = useRuntimeConfig();
+            let token: string;
+
+            if (import.meta.client) {
+                // Côté client : utilise public (exposé)
+                token = config.public.storyblok.accessToken || '';
             } else {
-                throw new Error('Storyblok API token is not defined in environment variables or runtime config.')
+                // Côté serveur : utilise privé (sécurisé)
+                token = config.storyblokDeliveryApiToken || '';
             }
+
+            if (!token) {
+                console.log({
+                    client: import.meta.client,
+                    configPublicStoryblok: config.public.storyblok,  // Pour debug
+                    configStoryblokDelivery: config.storyblokDeliveryApiToken,  // Pour debug
+                    env: process.env  // Pour debug
+                });
+                throw new Error('Storyblok API token is not defined in runtime config.');
+            }
+
+            this._storyblokApiToken = token;
+            return token;
         }
     }
 

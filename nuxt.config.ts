@@ -30,15 +30,21 @@ export default defineNuxtConfig({
         },
     },
     runtimeConfig: {
-        mailjetApiKey: process.env.MAILJET_API_KEY || '',
-        mailjetApiSecret: process.env.MAILJET_API_SECRET || '',
+        storyblokDeliveryApiToken: process.env.NUXT_STORYBLOK_DELIVERY_API_TOKEN || '',
+        mailjetApiKey: process.env.NUXT_MAILJET_API_KEY || '',
+        mailjetApiSecret: process.env.NUXT_MAILJET_API_SECRET || '',
+        public: {
+            storyblok: {
+                accessToken: process.env.NUXT_PUBLIC_STORYBLOK_ACCESS_TOKEN || '',
+            }
+        }
     },
     compatibilityDate: '2025-07-15',
     devtools: {enabled: true},
     modules: [[
         '@storyblok/nuxt',
         {
-            accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
+            accessToken: process.env.NUXT_STORYBLOK_DELIVERY_API_TOKEN,
             apiOptions: {
                 region: 'eu',
             },
