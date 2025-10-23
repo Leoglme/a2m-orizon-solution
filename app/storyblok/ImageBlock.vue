@@ -1,6 +1,6 @@
 <template>
   <div
-      class="w-full my-2 flex items-center"
+      class="image-block w-full my-2 flex items-center"
       :class="containerAlignClass"
       v-editable="props.blok"
   >
