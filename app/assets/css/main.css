@@ -53,6 +53,9 @@ input[type='number']::-webkit-inner-spin-button {
     body {
         @apply text-gray-900 bg-white;
     }
+    body, html {
+        @apply overflow-x-hidden;
+    }
 
     .rich-text h1 {
         @apply text-[38px] font-extrabold mb-6 mt-2 leading-12;

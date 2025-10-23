@@ -30,6 +30,7 @@ export type Content =
     | EmailContactTemplateContent
     | BlogArticleContent
     | BlogListContent
+    | ImageBlockContent
 
 export type BackgroundColor =
     | 'beige'
@@ -111,8 +112,10 @@ export type TabContent = BlockContent<{
 
 export type TabsContent = BlockContent<{
     component: 'tabs'
+    title?: string
     description: RichTextContent
     descriptionAnimation?: AnimationSettingsContent[]
+    titleAnimation?: AnimationSettingsContent[]
     contentPanelAnimation?: AnimationSettingsContent[]
     tabs: TabContent[]
 }>
@@ -260,4 +263,13 @@ export type BlogListContent = BlockContent<{
     showCategory?: boolean
     seo_title?: string
     seo_description?: string
+}>
+
+
+export type ImageBlockContent = BlockContent<{
+    component: 'image_block'
+    image: AssetContent
+    align: 'left' | 'center' | 'right'
+    maxWidth?: number
+    animation?: AnimationSettingsContent[]
 }>

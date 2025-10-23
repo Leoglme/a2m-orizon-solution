@@ -4,6 +4,17 @@
       v-editable="props.blok">
     <div
         class="flex-1 flex flex-col justify-start items-center gap-16 sm:gap-14 max-w-7xl">
+
+      <div
+          v-if="props.blok.title"
+          class="rich-text w-full items-center justify-left"
+          ref="titleRef"
+      >
+        <h1>
+          {{ props.blok.title }}
+        </h1>
+      </div>
+
       <div ref="descriptionRef" class="self-stretch flex flex-col justify-start items-center gap-2">
         <RichTextView :doc="props.blok.description" :blok="props.blok" />
       </div>
@@ -67,6 +78,7 @@ const currentTab: ComputedRef<TabContent | undefined> = computed(() => {
 
 /* -------- Refs pour GSAP -------- */
 const descriptionRef: Ref<HTMLElement | null> = ref(null)
+const titleRef: Ref<HTMLElement | null> = ref(null)
 const contentPanelRef: Ref<HTMLElement | null> = ref(null)
 
 
@@ -75,6 +87,11 @@ onMounted(() => {
 
   if (descriptionRef.value && descriptionAnimBlk && descriptionAnimBlk.enabled) {
     GsapService.animate(descriptionRef.value, descriptionAnimBlk) // ex: type 'slide-up'
+  }
+
+  const titleAnimBlk: AnimationSettingsContent | undefined = props.blok.titleAnimation?.[0]
+  if (titleRef.value && titleAnimBlk && titleAnimBlk.enabled) {
+    GsapService.animate(titleRef.value, titleAnimBlk) // ex: type 'slide-up'
   }
 
   const contentPanelAnimBlk: AnimationSettingsContent | undefined = props.blok.contentPanelAnimation?.[0]

@@ -4,7 +4,7 @@
       <!-- Embedded Storyblok components -->
       <component
           v-if="item.kind === 'embedded'"
-          :is="item.blok.component"
+          :is="toCamelCase(item.blok.component)"
           :blok="item.blok"
       />
 
@@ -18,11 +18,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type ComputedRef } from 'vue'
-import { renderRichText } from '@storyblok/vue'
+import type { ComputedRef } from 'vue'
 import type { PropType } from 'vue'
 import type { Content } from '~/content'
 import type { RichTextContent } from '~/delivery-api'
+import { renderRichText } from '@storyblok/vue'
+import { computed } from 'vue'
 
 type FlatNode =
     | { kind: 'embedded'; blok: any }
@@ -41,7 +42,16 @@ function renderNodeAsHtml(node: any): string {
   return renderRichText({ type: 'doc', content: [node] } as any) ?? ''
 }
 
-/**
+// Méthode component name to CamelCase (e.g., 'image_block' -> 'ImageBlock')
+function toCamelCase(str: string): string {
+  return str
+      .toLowerCase()
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('');
+}
+
+    /**
  * Flatten the richtext content:
  * - For `type: 'blok'`, push EACH embedded blok from `attrs.body` (not just [0])
  * - For any other node, render to HTML chunk

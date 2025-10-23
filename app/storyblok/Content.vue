@@ -66,6 +66,10 @@
   <slot v-if="props.blok.component === 'blog_article'">
     <BlogArticle :blok="props.blok" />
   </slot>
+
+  <slot v-if="props.blok.component === 'image_block'">
+    <ImageBlock :blok="props.blok" />
+  </slot>
 </template>
 
 <script setup lang="ts">
@@ -90,6 +94,7 @@ import Dropdown from './Dropdown.vue'
 import EmailContactPreview from './EmailContactPreview.vue'
 import BlogList from './BlogList.vue'
 import BlogArticle from './BlogArticle.vue'
+import ImageBlock from './ImageBlock.vue'
 
 export type ContentProps = {
   blok: Content
