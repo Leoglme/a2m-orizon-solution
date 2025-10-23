@@ -269,7 +269,7 @@ const videos: ReadonlyArray<Video> = [
   {
     id: 'umami',
     title: 'Voir les statistiques du site',
-    url: 'https://youtu.be/VIDEO_ID_4',
+    url: 'https://www.youtube.com/watch?v=pafHPSNm7W0',
     description: 'Ouvrir le tableau des visites et lire les chiffres importants.',
   },
 ] as const
