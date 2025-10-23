@@ -1,6 +1,6 @@
 <template>
   <div
-      class="image-block w-full my-2 flex items-center"
+      class="w-full my-2 flex items-center"
       :class="containerAlignClass"
       v-editable="props.blok"
   >
@@ -9,7 +9,7 @@
         v-if="imageSrc"
         :src="imageSrc"
         :alt="props.blok.image?.alt || ''"
-        class="h-auto w-full"
+        class="image-block h-auto w-full"
         :style="{
         '--img-max': maxPx || '100%',
         '--img-max-sm': '280px'
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType, Ref, ComputedRef, CSSProperties } from 'vue'
+import type { PropType, Ref, ComputedRef } from 'vue'
 import { computed, onMounted, ref } from 'vue'
 import type { ImageBlockContent, AnimationSettingsContent } from '~/content'
 import { GsapService } from '~/services/gsapService'
