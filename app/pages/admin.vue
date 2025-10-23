@@ -263,7 +263,7 @@ const videos: ReadonlyArray<Video> = [
   {
     id: 'storyblokBlog',
     title: 'Gérer les articles du Blog et les pages',
-    url: 'https://youtu.be/VIDEO_ID_3',
+    url: 'https://www.youtube.com/watch?v=scJzKWcVLzA',
     description: 'Créer un article, dupliquer une page, supprimer une page en toute sécurité.',
   },
   {
@@ -280,7 +280,7 @@ const support: Support = {
   phoneLink: '+33642193812',
 }
 
-const docs: Docs = {
+const docs = {
   storyblok: 'https://www.storyblok.com/docs/manuals/visual-editor',
   umami: 'https://umami.is/docs/filter',
 } as const
