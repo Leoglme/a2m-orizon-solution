@@ -10,7 +10,10 @@
         :src="imageSrc"
         :alt="props.blok.image?.alt || ''"
         class="h-auto w-full"
-        :style="imgStyle"
+        :style="{
+        '--img-max': maxPx || '100%',
+        '--img-max-sm': '280px'
+        }"
         loading="lazy"
         decoding="async"
     />
@@ -50,22 +53,10 @@ const containerAlignClass: ComputedRef<"justify-start" | "justify-end" | "justif
   }
 })
 
-const imgStyle: ComputedRef<CSSProperties> = computed(() => {
-  const max: number | undefined = props.blok.maxWidth && props.blok.maxWidth > 0 ? props.blok.maxWidth : undefined
-  // if sm max is 280px
-  if (max) {
-    return {
-      maxWidth: `${max}px`,
-      '@media (max-width: 640px)': {
-        maxWidth: '280px',
-      },
-    }
-  } else {
-    return {
-      maxWidth: '100%',
-    }
-  }
-})
+// string "1200px" ou undefined
+const maxPx: ComputedRef<string | undefined> = computed(() =>
+    props.blok.maxWidth && props.blok.maxWidth > 0 ? `${props.blok.maxWidth}px` : undefined
+)
 
 /** GSAP */
 const imgRef: Ref<HTMLElement | null> = ref(null)
@@ -77,3 +68,22 @@ onMounted(() => {
   }
 })
 </script>
+
+
+<style scoped>
+:root {
+  --img-max: 100%;
+  --img-max-sm: 280px;
+}
+
+.image-block {
+  max-width: var(--img-max, 100%);
+}
+
+/* ≤ 640px */
+@media (max-width: 640px) {
+  .image-block {
+    max-width: var(--img-max-sm, 280px);
+  }
+}
+</style>
