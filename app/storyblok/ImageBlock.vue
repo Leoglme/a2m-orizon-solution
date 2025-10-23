@@ -9,7 +9,7 @@
         v-if="imageSrc"
         :src="imageSrc"
         :alt="props.blok.image?.alt || ''"
-        class="h-auto"
+        class="h-auto w-full"
         :style="imgStyle"
         loading="lazy"
         decoding="async"
@@ -52,7 +52,19 @@ const containerAlignClass: ComputedRef<"justify-start" | "justify-end" | "justif
 
 const imgStyle: ComputedRef<CSSProperties> = computed(() => {
   const max: number | undefined = props.blok.maxWidth && props.blok.maxWidth > 0 ? props.blok.maxWidth : undefined
-  return max ? { maxWidth: `${max}px`, width: '100%' } : { width: '100%', maxWidth: '100%' }
+  // if sm max is 280px
+  if (max) {
+    return {
+      maxWidth: `${max}px`,
+      '@media (max-width: 640px)': {
+        maxWidth: '280px',
+      },
+    }
+  } else {
+    return {
+      maxWidth: '100%',
+    }
+  }
 })
 
 /** GSAP */
