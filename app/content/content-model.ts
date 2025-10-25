@@ -31,6 +31,7 @@ export type Content =
     | BlogArticleContent
     | BlogListContent
     | ImageBlockContent
+    | TextBlockContent
 
 export type BackgroundColor =
     | 'beige'
@@ -272,4 +273,10 @@ export type ImageBlockContent = BlockContent<{
     align: 'left' | 'center' | 'right'
     maxWidth?: number
     animation?: AnimationSettingsContent[]
+}>
+
+
+export type TextBlockContent = BlockContent<{
+    component: 'text_block'
+    text: RichTextContent
 }>

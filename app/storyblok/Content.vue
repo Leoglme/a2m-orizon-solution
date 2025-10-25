@@ -70,6 +70,13 @@
   <slot v-if="props.blok.component === 'image_block'">
     <ImageBlock :blok="props.blok" />
   </slot>
+  <slot v-if="props.blok.component === 'image_block'">
+    <ImageBlock :blok="props.blok" />
+  </slot>
+
+  <slot v-if="props.blok.component === 'text_block'">
+    <TextBlock :blok="props.blok" />
+  </slot>
 </template>
 
 <script setup lang="ts">

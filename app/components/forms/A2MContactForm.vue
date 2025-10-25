@@ -205,7 +205,7 @@ async function onSubmit(): Promise<void> {
 
     if (data.value) {
       successMessage.value =
-          'Votre message a été envoyé avec succès ! Un accusé de réception vous a été envoyé par email.'
+          'Nous revenons vers vous dans un délai maximum de 48 heures, un accusé de réception vous a été envoyé par email.'
       resetFormValues()
     }
   } catch (err) {

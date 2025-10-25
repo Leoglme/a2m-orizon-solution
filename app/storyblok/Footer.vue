@@ -49,6 +49,10 @@
               <MailIcon/>
             </NuxtLink>
           </div>
+
+          <p class="self-stretch text-white/70 sm:text-sm font-normal leading-relaxed md:text-base">
+            © a2m-orizon-solutionsocial.fr {{nowyear}}. Tous droits réservés.
+          </p>
         </div>
       </div>
     </div>
@@ -119,6 +123,9 @@ const props: FooterProps = defineProps({
     default: '',
   },
 })
+
+/* DATAS */
+const nowyear: number = new Date().getFullYear()
 
 /* ROUTE */
 const router: Router = useRouter()
