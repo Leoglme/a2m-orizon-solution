@@ -272,6 +272,24 @@ const videos: ReadonlyArray<Video> = [
     url: 'https://www.youtube.com/watch?v=pafHPSNm7W0',
     description: 'Ouvrir le tableau des visites et lire les chiffres importants.',
   },
+  {
+    id: 'storyblokBlog',
+    title: ' Comment ajouter une nouvelle section / encart',
+    url: 'https://www.youtube.com/watch?v=ebqhAk2fDx0',
+    description: 'Créer une section de contenu de zéro ou en copiant une existante.',
+  },
+  {
+    id: 'storyblokBlog',
+    title: ' Ajouter et gérer les animations',
+    url: 'https://www.youtube.com/watch?v=PgqFs9W2hOs',
+    description: 'Créer, ajouter et modifier les animations sur l\'éditeur.',
+  },
+  {
+    id: 'storyblokBlog',
+    title: ' Comment générer le texte Mentions légales',
+    url: 'https://www.youtube.com/watch?v=gfBqAQCnG1Y',
+    description: 'Générer le contenue des Mentions légales pour votre site grâce à LegalStart',
+  },
 ] as const
 
 const support: Support = {
