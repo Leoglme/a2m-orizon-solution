@@ -35,6 +35,7 @@ export default defineEventHandler(async (event: H3Event) => {
             name: body.name?.trim(),
             email: body.email?.trim(),
             message: body.message.trim(),
+            phone: body.phone?.trim(),
         })
         if(body.email) {
             await sendContactAcknowledgementMail({
@@ -42,6 +43,7 @@ export default defineEventHandler(async (event: H3Event) => {
                 name: body.name?.trim(),
                 email: body.email.trim(),
                 message: body.message.trim(),
+                phone: body.phone?.trim(),
             })
         }
         return { message: 'Contact emails sent successfully.' }
