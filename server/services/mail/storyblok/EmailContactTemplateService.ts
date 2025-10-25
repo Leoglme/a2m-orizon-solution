@@ -103,11 +103,8 @@ export class EmailContactTemplateService {
         const blok: EmailContactTemplateBlok = story.content.body[0]
         const bg: string = BG_HEX[blok.backgroundColor] ?? '#FFFFFF'
 
-        if(!vars.name) {
-            // replace in title 'de {{name}}' with 'du {{phone}}'
-            if(vars.phone) {
-                blok.title = blok.title.replace('de {{name}}', 'du {{phone}}')
-            }
+        if(!vars.name && vars.phone) {
+            blok.subject = blok.subject.replace('de {{name}}', 'du {{phone}}')
         }
 
         // 1) Subject (templated)

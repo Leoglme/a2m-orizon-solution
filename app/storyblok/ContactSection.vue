@@ -33,10 +33,10 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType, Ref, ComputedRef } from 'vue'
+import type { PropType, Ref } from 'vue'
 import type {ContactSectionContent, AnimationSettingsContent, PillOptionContent} from '~/content'
 export type ContactSectionProps = { blok: ContactSectionContent }
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import RichTextView from '~/components/RichText.vue'
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
 import ChatIcon from "~/components/icons/ChatIcon.vue";

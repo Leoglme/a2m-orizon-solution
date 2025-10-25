@@ -108,7 +108,7 @@ const rawPlaceholders: ComputedRef<{ phone?: string }> = computed(() => {
 })
 
 const placeholders: ComputedRef<{ phone: string }> = computed(() => ({
-  phone: rawPlaceholders.value.phone || '06 12 34 56 78',
+  phone: rawPlaceholders.value.phone || '06 51 62 23 06',
 }))
 
 /* INITIAL SUBJECT */
