@@ -16,32 +16,34 @@ export default defineEventHandler(async (event: H3Event) => {
     const body: ContactFormPayload = await readBody(event)
 
     // Strict required fields
-    if (!body?.subject || !body?.name || !body?.email || !body?.message) {
+    if (!body?.subject || !body?.message) {
         throw createError({
             statusCode: 400,
-            statusMessage: 'Invalid payload: subject, name, email and message are required.',
+            statusMessage: 'Invalid payload: subject and message are required.',
         })
     }
 
     // Basic email regex
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(body.email)) {
+    if (body.email && !emailRegex.test(body.email)) {
         throw createError({ statusCode: 400, statusMessage: 'Invalid email format.' })
     }
 
     try {
         await sendContactNotificationMail({
             subject: body.subject.trim(),
-            name: body.name.trim(),
-            email: body.email.trim(),
+            name: body.name?.trim(),
+            email: body.email?.trim(),
             message: body.message.trim(),
         })
-        await sendContactAcknowledgementMail({
-            subject: body.subject.trim(),
-            name: body.name.trim(),
-            email: body.email.trim(),
-            message: body.message.trim(),
-        })
+        if(body.email) {
+            await sendContactAcknowledgementMail({
+                subject: body.subject.trim(),
+                name: body.name?.trim(),
+                email: body.email.trim(),
+                message: body.message.trim(),
+            })
+        }
         return { message: 'Contact emails sent successfully.' }
     } catch (error) {
         console.error('contact.post: Error sending contact emails:', error)

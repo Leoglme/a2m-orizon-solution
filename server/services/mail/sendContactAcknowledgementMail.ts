@@ -1,5 +1,5 @@
 import type { EmailContactStory, EmailVars, RenderedEmail } from '~~/server/services/mail/storyblok/EmailContactTemplateService'
-import type { ContactFormPayload } from '~~/server/types/mail/contact'
+import type { RestrictedContactFormPayload } from '~~/server/types/mail/contact'
 import { websiteName } from '~~/server/services/mail/mail.config'
 import { sendMail } from '~~/server/services/mail/sendMail'
 import { EmailContactTemplateService } from '~~/server/services/mail/storyblok/EmailContactTemplateService'
@@ -8,7 +8,7 @@ import { EmailContactTemplateService } from '~~/server/services/mail/storyblok/E
  * Sends an acknowledgement email to the user.
  * Fetches Storyblok story "emails/email-contact-acknowledgement" and renders it with variables.
  */
-export async function sendContactAcknowledgementMail(payload: ContactFormPayload): Promise<void> {
+export async function sendContactAcknowledgementMail(payload: RestrictedContactFormPayload): Promise<void> {
     const story: EmailContactStory = await EmailContactTemplateService.fetchBySlug('emails/email-contact-acknowledgement')
     const vars: EmailVars = EmailContactTemplateService.buildVars(payload, websiteName)
     const rendered: RenderedEmail = EmailContactTemplateService.render(story, vars)

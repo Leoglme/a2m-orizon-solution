@@ -15,25 +15,34 @@
           <RichTextView :doc="props.blok.description" :blok="props.blok" />
         </slot>
       </div>
-
       <!-- FORM -->
-      <A2MContactForm
+      <A2MCallbackForm
+        v-if="activeSubjectValue === 'rappel'"
         :subjects="props.blok.subjects"
+        :activeSubject="activeSubjectValue"
+        @update:subject="activeSubjectValue = $event"
+      />
+      <A2MContactForm
+        v-else
+        :subjects="props.blok.subjects"
+        :activeSubject="activeSubjectValue"
+        @update:subject="activeSubjectValue = $event"
       />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import type { PropType, Ref } from 'vue'
-import type { ContactSectionContent, AnimationSettingsContent } from '~/content'
+import type { PropType, Ref, ComputedRef } from 'vue'
+import type {ContactSectionContent, AnimationSettingsContent, PillOptionContent} from '~/content'
 export type ContactSectionProps = { blok: ContactSectionContent }
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import RichTextView from '~/components/RichText.vue'
 import {backgroundColor} from "~/storyblok/backgroundColorClass";
 import ChatIcon from "~/components/icons/ChatIcon.vue";
 import A2MContactForm from "~/components/forms/A2MContactForm.vue";
 import {GsapService} from "~/services/gsapService";
+import A2MCallbackForm from "~/components/forms/A2MCallbackForm.vue";
 
 const props: ContactSectionProps = defineProps({
   blok: { type: Object as PropType<ContactSectionContent>, required: true },
@@ -55,4 +64,6 @@ onMounted(() => {
     GsapService.animate(titleRef.value, titleAnimBlk) // ex: type 'slide-up'
   }
 })
+
+const activeSubjectValue: Ref<string> = ref(props.blok.subjects.find((subject: PillOptionContent) => subject.active)?.value || '')
 </script>

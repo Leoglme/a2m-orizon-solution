@@ -88,6 +88,7 @@ import A2MAlert from "~/components/feedback/A2MAlert.vue";
 
 export type A2MContactFormProps = {
   subjects: PillOptionContent[]
+  activeSubject?: string
   placeholders?: string
 }
 
@@ -96,6 +97,10 @@ const props: A2MContactFormProps = defineProps({
   subjects: {
     type: Array as PropType<PillOptionContent[]>,
     required: true,
+  },
+  activeSubject: {
+    type: String,
+    default: null,
   },
   placeholders: {
     type: String,
@@ -134,6 +139,14 @@ const placeholders: ComputedRef<{
 /** 2) Initial subject: takes the 1st 'active' option, otherwise the first */
 const initialSubject: string = (() => {
   const s: PillOptionContent[] = props.subjects || []
+  const findSubjectByActiveSubject: PillOptionContent | undefined = props.activeSubject
+      ? s.find((p) => (p.value || p.label) === props.activeSubject)
+      : undefined
+
+  if(findSubjectByActiveSubject) {
+    return findSubjectByActiveSubject.value || findSubjectByActiveSubject.label
+  }
+
   const active: PillOptionContent | undefined = s.find((p) => p.active)
   return (
       (active?.value || active?.label) ||
@@ -215,4 +228,14 @@ async function onSubmit(): Promise<void> {
     isSubmitting.value = false
   }
 }
+
+const emit = defineEmits<{
+  (e: 'update:subject', value: string): void
+}>()
+
+/* WATCHERS */
+// watch subject and emit update event
+watch(subject, (newValue: string) => {
+  emit('update:subject', newValue)
+})
 </script>

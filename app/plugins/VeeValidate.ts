@@ -33,6 +33,14 @@ export default defineNuxtPlugin(() => {
         return ok || 'Veuillez entrer un nom valide (lettres, espaces, tirets, apostrophes).'
     })
 
+    defineRule('phone', (value: string) => {
+        if (!value) return true // required gère le vide
+        const cleaned: string = value.replace(/[\s.\-()]/g, '')
+        const phoneRegex: RegExp = /^(0[1-9]\d{8})$/
+
+        return phoneRegex.test(cleaned) || 'Veuillez entrer un numéro de téléphone français valide (ex: 06 12 34 56 78)'
+    })
+
     // Localisation
     localize({ en, fr })
     configure({
