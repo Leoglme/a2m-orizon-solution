@@ -85,7 +85,7 @@ export default defineNuxtConfig({
     seo: { enabled: true },
     robots: {
         enabled: true,
-        disallow: ['/admin', '/404', '/emails/*'],
+        disallow: ['/admin', '/404', '/emails/*', '/_nuxt/*'],
         sitemap: `${meta.url}/sitemap.xml`,
     },
     plugins: ['~/plugins/VeeValidate'],
