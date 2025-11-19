@@ -6,6 +6,7 @@ import { computed } from 'vue';
 import { useRoute } from 'nuxt/app';
 import {StoryblokService} from "~/services/storyblokService";
 import meta from "~~/meta";
+import { createError } from 'h3';
 
 const route: RouteLocationNormalizedLoadedGeneric = useRoute();
 const isStoryblokEditor = !!route.query._storyblok;
@@ -79,7 +80,22 @@ const storyPath: ComputedRef<string> = computed((): string => {
   }
 })
 
-const pageStory: StoryResponse<PageStory> = await StoryblokService.getStoryBySlug<PageStory>(storyPath.value, isStoryblokEditor ? 'draft' : 'published');
+// Gérer les erreurs 404 pour les articles supprimés
+let pageStory: StoryResponse<PageStory>
+try {
+  pageStory = await StoryblokService.getStoryBySlug<PageStory>(storyPath.value, isStoryblokEditor ? 'draft' : 'published');
+} catch (error: any) {
+  // Si l'article n'existe pas (404), retourner une 404 proprement
+  if (error?.statusCode === 404 || error?.message?.includes('404')) {
+    throw createError({ 
+      statusCode: 404, 
+      statusMessage: 'Page not found',
+      fatal: false 
+    })
+  }
+  // Pour les autres erreurs, les propager
+  throw error
+}
 
 const pageTitle: ComputedRef<string> = computed(() => {
   return pageStory.story.content.seo_title || pageStory.story.name || meta.title;

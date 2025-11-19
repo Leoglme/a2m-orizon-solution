@@ -108,7 +108,9 @@ export class StoryblokService {
 
         const response: Response = await fetch(url)
         if (!response.ok) {
-            throw new Error(`Failed to fetch story "${slug}": ${response.status} ${response.statusText}`)
+            const error: any = new Error(`Failed to fetch story "${slug}": ${response.status} ${response.statusText}`)
+            error.statusCode = response.status
+            throw error
         }
 
         const data: StoryResponse<TStory> = await response.json()
